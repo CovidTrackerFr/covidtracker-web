@@ -1,0 +1,16 @@
+url: "http://localhost:4000" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "" # the subpath of your site, e.g. /blog
+title: "Covidtracker"
+sass:
+ load_paths:
+  - _sass
+  - node_modules
+exclude:
+ - node_modules
+ - LICENSE.txt
+ - Makefile
+ - README.md
+ - package.json
+ - package-lock.json
+ - yarn.lock
+ - deploy_npm.sh

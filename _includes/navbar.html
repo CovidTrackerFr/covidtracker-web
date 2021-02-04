@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Logo</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav mr-auto">
+            {% for item in site.data.navbar %}
+                {% if page.url contains item.link %}
+                    {% assign class = 'active' %}
+                {% endif %}
+                {% if item.sublinks %}
+                    <li class="nav-item dropdown {{ class }}">
+                        <a href="{{item.link}}" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            {{item.name}}
+                        </a>
+                        <div class="dropdown-menu" aria-label="navbarDropdown">
+                            {% for sublink in item.sublinks %}
+                                <a class="dropdown-item" href="{{ sublink.link }}">{{ sublink.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item {{ class }}">
+                        <a class="nav-link" href="{{item.link}}">{{ item.name }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</nav>

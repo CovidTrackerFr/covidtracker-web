@@ -1,0 +1,9 @@
+- name: Accueil
+  link: /
+- name: Dashboards
+  link: /
+- name: Outils
+  link: /outils
+  sublinks:
+    - name: Vaccintracker
+      link: /outils/vaccintracker
