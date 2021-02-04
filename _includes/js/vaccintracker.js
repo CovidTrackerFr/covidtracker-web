@@ -65,9 +65,9 @@ fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data
         fetchOtherData();
 
     })
-    .catch(function () {
+    .catch(function (error) {
             this.dataError = true;
-            console.log("error1")
+            console.log(error.message)
         }
     )
 
@@ -91,9 +91,9 @@ fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/news
         //console.log(contenu_news)
 
     })
-    .catch(function () {
+    .catch(function (error) {
             this.dataError = true;
-            console.log("error2")
+            console.log(error.message)
         }
     )
 
@@ -133,9 +133,9 @@ function fetchOtherData(){
                 updated = true;
             }
         })
-        .catch(function () {
+        .catch(function (error) {
                 this.dataError = true;
-                console.log("error3")
+                console.log(error.message)
             }
         )
 
@@ -174,9 +174,9 @@ function fetchOtherData(){
                 updated = true;
             }
         })
-        .catch(function () {
+        .catch(function (error) {
                 this.dataError = true;
-                console.log("error4")
+                console.log(error.message);
             }
         )
 
@@ -459,6 +459,7 @@ function tableVaccin(tableElt, level){
     tableElt.innerHTML = "";
     let first = true;
     for(let i=0; i<10; i++){
+
         let row = tableElt.insertRow();
 
         for(let j=0; j<10; j++){
@@ -505,18 +506,18 @@ function majValeurs(){
 
     document.getElementById("proportionAVaccinerImmu").innerHTML = (Math.round(restantaVaccinerImmunite*10000000)/10000000).toFixed(2);
     document.getElementById("objectif_quotidien").innerHTML = numberWithSpaces(objectifQuotidien);
-    document.getElementById("date_projetee_objectif").innerHTML = formaterDate(dateProjeteeObjectif);
+    //document.getElementById("date_projetee_objectif").innerHTML = formaterDate(dateProjeteeObjectif);
     date = nb_vaccines[nb_vaccines.length-1].date
     date = date.slice(8) + "/" + date.slice(5, 7)
-    //heure = nb_vaccines[nb_vaccines.length-1].heure
+    heure = nb_vaccines[nb_vaccines.length-1].heure
 
     date_stock = dates_stock[dates_stock.length-1]
     date_stock = date_stock.slice(8) + "/" + date_stock.slice(5, 7)
 
     document.getElementById("date_maj_1").innerHTML = date;
-    //document.getElementById("date_maj_2").innerHTML = date + " à " + heure;
+    document.getElementById("date_maj_2").innerHTML = date + " à " + heure;
     document.getElementById("date_maj_3").innerHTML = date;
-    document.getElementById("date_maj_4").innerHTML = date_stock;
+    //document.getElementById("date_maj_4").innerHTML = date_stock;
     tableVaccin(table, 0);
 
 }

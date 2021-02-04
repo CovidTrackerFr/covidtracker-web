@@ -1,0 +1,42 @@
+---
+layout: page
+title: VaccinTracker
+subtitle: Combien de français ont été vaccinés contre la Covid19 ?
+js:
+  - js/covidtracker_utils.js
+  - js/vaccintracker.js
+css:
+  - assets/css/vaccintracker.css
+---
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-2">
+            <div id="navbar-verticale" class="list-group sticky-top list-group-flush">
+                <a class="list-group-item list-group-item-action" href="#cards_vaccins">Résumé</a>
+                <a class="list-group-item list-group-item-action" href="#proportion_vaccins">Population vaccinée</a>
+                <a class="list-group-item list-group-item-action" href="#evolution_vaccins">Évolution</a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <p>Quelle proportion des Français a été vaccinée ? Combien faut-il encore vacciner de personnes avant
+                d'atteindre
+                l'immunité collective ? Quels sont les différents types de vaccins proposés ? Ce tracker permet de
+                suivre la proportion de Français déjà vaccinés contre la Covid19. VaccinTracker est une initiative
+                citoyenne indépendante et non officielle.
+            </p>
+
+            {% include_relative elements/vaccins/cards.html %}
+
+            {% include_relative elements/vaccins/proportion.html %}
+
+            {% include_relative elements/vaccins/evolution.html %}
+
+
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
+
+</div>
