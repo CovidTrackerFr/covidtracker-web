@@ -6,7 +6,7 @@ js:
   - js/covidtracker_utils.js
   - js/vaccintracker.js
 css:
-  - assets/css/vaccintracker.css
+- assets/css/vaccins_proportion.css
 ---
 <div class="container-fluid">
 
@@ -16,9 +16,11 @@ css:
                 <a class="list-group-item list-group-item-action" href="#cards_vaccins">Résumé</a>
                 <a class="list-group-item list-group-item-action" href="#proportion_vaccins">Population vaccinée</a>
                 <a class="list-group-item list-group-item-action" href="#evolution_vaccins">Évolution</a>
+                <a class="list-group-item list-group-item-action" href="#vaccins_immunite">Immunité collective</a>
+                <a class="list-group-item list-group-item-action" href="#autorisation-des-vaccins">Vaccins autorisés</a>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
             <p>Quelle proportion des Français a été vaccinée ? Combien faut-il encore vacciner de personnes avant
                 d'atteindre
                 l'immunité collective ? Quels sont les différents types de vaccins proposés ? Ce tracker permet de
@@ -32,9 +34,9 @@ css:
 
             {% include_relative elements/vaccins/evolution.html %}
 
+            {% include_relative elements/vaccins/immunitecollective.html %}
 
-        </div>
-        <div class="col-md-2">
+            {% include_relative elements/vaccins/autorisations.html %}
 
         </div>
     </div>
