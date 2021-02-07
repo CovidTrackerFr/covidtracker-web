@@ -26,6 +26,8 @@ bundle exec jekyll serve --livereload
 
 Le site est alors disponible à l'adresse http://localhost:4000
 
+Et une interface d'administration est disponible à l'adresse http://localhost:4000/admin
+
 ### Pour les développeurs
 
 #### Mettre à jour Bootstrap
@@ -37,4 +39,8 @@ npm update
 ./deploy_npm.sh
 ```
 
+### Pour les contributeurs
 
+Pour modifier le site : soit directement en modifiant les sources, soit en passant par l'interface d'administration.
+
+Pour ajouter une page à la barre de navigation, il suffit de modifier le fichier ```_data/navbar.yml```.

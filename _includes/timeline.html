@@ -1,0 +1,21 @@
+<h4>{{include.title}}</h4>
+
+<div class="vertical-timeline">
+    {% for item in include.data %}
+    <div class="timeline">
+        <div class="timeline-content">
+            <span class="year">{{item.date}}</span>
+            <h3 class="title">{{item.title}}</h3>
+            <div class="description">
+                <ul>
+                    {% for li in item.liste %}
+                    <li style="list-style: none">{{li}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+

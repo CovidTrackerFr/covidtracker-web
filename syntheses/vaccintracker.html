@@ -7,15 +7,18 @@ js:
   - js/vaccintracker.js
 css:
 - assets/css/vaccins_proportion.css
+- assets/css/timeline.css
 ---
 <div class="container-fluid">
 
     <div class="row">
         <div class="col-md-2">
             <div id="navbar-verticale" class="list-group sticky-top list-group-flush">
+                <a class="list-group-item list-group-item-action" href="#news">News</a>
                 <a class="list-group-item list-group-item-action" href="#cards_vaccins">Résumé</a>
                 <a class="list-group-item list-group-item-action" href="#proportion_vaccins">Population vaccinée</a>
                 <a class="list-group-item list-group-item-action" href="#evolution_vaccins">Évolution</a>
+                <a class="list-group-item list-group-item-action" href="#cartes_vaccins">Répartition géographique</a>
                 <a class="list-group-item list-group-item-action" href="#vaccins_immunite">Immunité collective</a>
                 <a class="list-group-item list-group-item-action" href="#autorisation-des-vaccins">Vaccins autorisés</a>
             </div>
@@ -33,6 +36,8 @@ css:
             {% include_relative elements/vaccins/proportion.html %}
 
             {% include_relative elements/vaccins/evolution.html %}
+
+            {% include_relative elements/vaccins/repartition_geo.html %}
 
             {% include_relative elements/vaccins/immunitecollective.html %}
 

@@ -1,16 +1,15 @@
-<h2 style="margin-top : 80px;">
-    Répartition des vaccinés
+<h2 id="cartes_vaccins">
+    Répartition géographique des vaccinés
 </h2>
 
-<div class="" style="margin-bottom: 40px;">
+<div class="">
     Coloration en fonction du pourcentage de population vaccinée.
     Données fournies par le Ministère de la Santé.
     Cliquez sur une région pour afficher plus de détails.
 </div>
 <br>
 
-<center>
-    <div id="choixCarte">
+    <div id="choixCarte" class="align-content-center">
         <div class="btn-group" role="group" aria-label="Choix carte">
             <button id="choixCarteDepartement" type="button" class="btn btn-secondary active">
                 Par département
@@ -20,10 +19,9 @@
             </button>
         </div>
     </div>
-</center>
 
 <div id="blocCarteDepartement">
-    <?php include(__DIR__ . '/carteDepartement.php') ?>
+    {% include carte.html type="departements" %}
 </div>
 <div id="blocCarteRegion" class="hidden">
     <?php include(__DIR__ . '/carteRegion.php') ?>

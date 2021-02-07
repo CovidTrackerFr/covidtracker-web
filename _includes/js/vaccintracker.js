@@ -71,31 +71,6 @@ fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data
         }
     )
 
-fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/news.csv', {cache: 'no-cache'})
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("HTTP error " + response.status);
-        }
-        return response.text();
-    })
-    .then(csv => {
-        this.data_news = csv;
-
-        array_data_news = CSVToArray(csv, ",");
-        array_data_news.slice(1, array_data_news.length-1).map((value, idx) => {
-            this.titre_news.push(value[0])
-            this.contenu_news.push(value[1]);
-        })
-
-        afficherNews();
-        //console.log(contenu_news)
-
-    })
-    .catch(function (error) {
-            this.dataError = true;
-            console.log(error.message)
-        }
-    )
 
 function fetchOtherData(){
     // Get data from Guillaume csv
@@ -207,20 +182,6 @@ function maj2Doses(){
 
     date=vaccines_2doses.jour[N-1]
     document.getElementById("date_maj_2").innerHTML = date.slice(8) + "/" + date.slice(5, 7);
-}
-
-function afficherNews(){
-    var html_str = ""
-
-    titre_news.forEach((value, idx)=>{
-        html_str += `<i>` + value + `</i><br>`+ contenu_news[idx]
-
-        if(idx<titre_news.length-1){
-            html_str += `<br><br>`
-        }
-    })
-    //document.getElementById("news").innerHTML = `<div style="margin-bottom: 20px; border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 7px; padding: 10px; background-color: rgba(0, 0, 0, 0.05);">` + html_str + `</div>`;
-
 }
 
 

@@ -14,3 +14,7 @@ exclude:
  - package-lock.json
  - yarn.lock
  - deploy_npm.sh
+
+plugins:
+ - jekyll-twitter-plugin
+
