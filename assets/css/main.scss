@@ -2,5 +2,36 @@
 ---
 
 @import "main";
-@import "bootstrap/scss/bootstrap";
+@import "variables";
+@import "startbootstrap-sb-admin-2/scss/sb-admin-2";
 @import "select2/src/scss/core";
+
+.navbar-fixed-full {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar-fixed-full {
+  width: calc(100% - 6.5rem);
+}
+
+@media (min-width: 768px) {
+  .navbar-fixed-full {
+    width: calc(100% - 14rem);
+  }
+}
+
+.navbar-anchor::before {
+  content: '';
+  display: block;
+  position: relative;
+  width: 0;
+  height: 200px;
+  margin-top: -200px;
+}
+
+h2 {
+  border-bottom: 1px solid lightgrey;
+}

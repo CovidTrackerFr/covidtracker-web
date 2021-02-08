@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: dashboard
 title: "Covidtracker"
 ---
 

@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: dashboard
 title: VaccinTracker
 subtitle: Combien de français ont été vaccinés contre la Covid19 ?
 js:
@@ -9,41 +9,55 @@ css:
 - assets/css/vaccins_proportion.css
 - assets/css/timeline.css
 ---
-<div class="container-fluid">
+<div class="navbar-fixed-full">
+    <div class="row justify-content-md-center" style="background-color: white">
+        <h1 class="display-1">{{page.title}}</h1>
+        <blockquote class="blockquote"><p class="mb-0">>{{page.subtitle}}</p></blockquote>
+    </div>
+    <div id="navbar-verticale" class="list-group list-group-horizontal">
+        <a class="list-group-item list-group-item-action" href="#cards_vaccins">Résumé</a>
+        <a class="list-group-item list-group-item-action" href="#proportion_vaccins">Population vaccinée</a>
+        <a class="list-group-item list-group-item-action" href="#evolution_vaccins">Évolution</a>
+        <a class="list-group-item list-group-item-action" href="#cartes_vaccins">Répartition géographique</a>
+        <a class="list-group-item list-group-item-action" href="#vaccins_immunite">Immunité collective</a>
+        <a class="list-group-item list-group-item-action" href="#autorisation-des-vaccins">Vaccins autorisés</a>
+    </div>
+</div>
+
+<div class="container-fluid" style="padding-top: 200px">
 
     <div class="row">
-        <div class="col-md-2">
-            <div id="navbar-verticale" class="list-group sticky-top list-group-flush">
-                <a class="list-group-item list-group-item-action" href="#news">News</a>
-                <a class="list-group-item list-group-item-action" href="#cards_vaccins">Résumé</a>
-                <a class="list-group-item list-group-item-action" href="#proportion_vaccins">Population vaccinée</a>
-                <a class="list-group-item list-group-item-action" href="#evolution_vaccins">Évolution</a>
-                <a class="list-group-item list-group-item-action" href="#cartes_vaccins">Répartition géographique</a>
-                <a class="list-group-item list-group-item-action" href="#vaccins_immunite">Immunité collective</a>
-                <a class="list-group-item list-group-item-action" href="#autorisation-des-vaccins">Vaccins autorisés</a>
-            </div>
-        </div>
-        <div class="col-md-10">
-            <p>Quelle proportion des Français a été vaccinée ? Combien faut-il encore vacciner de personnes avant
-                d'atteindre
-                l'immunité collective ? Quels sont les différents types de vaccins proposés ? Ce tracker permet de
-                suivre la proportion de Français déjà vaccinés contre la Covid19. VaccinTracker est une initiative
-                citoyenne indépendante et non officielle.
-            </p>
+        <p>Quelle proportion des Français a été vaccinée ? Combien faut-il encore vacciner de personnes avant
+            d'atteindre
+            l'immunité collective ? Quels sont les différents types de vaccins proposés ? Ce tracker permet de
+            suivre la proportion de Français déjà vaccinés contre la Covid19. VaccinTracker est une initiative
+            citoyenne indépendante et non officielle.
+        </p>
 
+        <div class="col-md-12 mt-3">
             {% include_relative elements/vaccins/cards.html %}
-
-            {% include_relative elements/vaccins/proportion.html %}
-
-            {% include_relative elements/vaccins/evolution.html %}
-
-            {% include_relative elements/vaccins/repartition_geo.html %}
-
-            {% include_relative elements/vaccins/immunitecollective.html %}
-
-            {% include_relative elements/vaccins/autorisations.html %}
-
         </div>
+
+        <div class="col-md-12 mt-3">
+            {% include_relative elements/vaccins/proportion.html %}
+        </div>
+
+        <div class="col-md-12 mt-3">
+            {% include_relative elements/vaccins/evolution.html %}
+        </div>
+
+        <div class="col-md-12 mt-3">
+            {% include_relative elements/vaccins/repartition_geo.html %}
+        </div>
+
+        <div class="col-md-12 mt-3">
+            {% include_relative elements/vaccins/immunitecollective.html %}
+        </div>
+
+        <div class="col-md-12 mt-3">
+            {% include_relative elements/vaccins/autorisations.html %}
+        </div>
+
     </div>
 
 </div>
