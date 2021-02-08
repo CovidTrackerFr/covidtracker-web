@@ -1,9 +1,16 @@
 - name: Accueil
   link: /
-- name: Dashboards
+- name: Synthèses
   link: /
+  sublinks:
+    - name: Infections
+      link: /
+    - name: Situation hospitalière
+      link: /
+    - name: Vaccins
+      link: /syntheses/vaccintracker
 - name: Outils
   link: /outils
   sublinks:
-    - name: Vaccintracker
-      link: /outils/vaccintracker
+    - name: Vaccin Planner
+      link: /outils/vaccinplanner
