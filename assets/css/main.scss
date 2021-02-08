@@ -25,6 +25,15 @@
 #content-wrapper.toggled {
   margin-left: 0;
 }
+
+#dashboard_nav {
+  width: 6.5rem;
+}
+
+#dashboard_nav.toggled {
+  width: 0;
+}
+
 @media (min-width: 768px) {
   #content-wrapper .navbar-fixed-full {
     width: calc(100% - 14rem);
@@ -37,6 +46,14 @@
   }
   #content-wrapper.toggled {
     margin-left: 6.5rem;
+  }
+
+  #dashboard_nav {
+    width: 14rem;
+  }
+
+  #dashboard_nav.toggled {
+    width: 6.5rem;
   }
 }
 

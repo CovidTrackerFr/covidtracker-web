@@ -3,7 +3,7 @@
 
     // Toggle the side navigation
     $("#sidebarToggle, #sidebarToggleTop").on('click', function (e) {
-        console.log('test');
         $("#content-wrapper").toggleClass("toggled");
+        $("#dashboard_nav").toggleClass("toggled");
     });
 })(jQuery);
