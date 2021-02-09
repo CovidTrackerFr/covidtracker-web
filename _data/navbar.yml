@@ -1,16 +1,20 @@
-- name: Accueil
-  link: /
-- name: Synthèses
-  link: /
-  sublinks:
-    - name: Infections
-      link: /
-    - name: Situation hospitalière
-      link: /
-    - name: Vaccins
-      link: /syntheses/vaccintracker
-- name: Outils
-  link: /outils
-  sublinks:
-    - name: Vaccin Planner
-      link: /outils/vaccinplanner
+- title: Vaccins
+  links:
+    - name: Vaccintracker
+      icon: fa-chart-line
+      link: syntheses/vaccintracker
+    - name: VaccinPlanner
+      icon: fa-calendar-check
+      link: outils/vaccinplanner
+- title: Cartes
+  links:
+    - name: Départements
+      sublinks:
+        - name: Vaccins
+          link: cartes/vaccinsdepartements
+        - name: hospitalisations
+          link: cartes/hospdepartements
+    - name: Région
+      sublinks:
+        - name: Vaccins
+          link: cartes/vaccinsregions

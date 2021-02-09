@@ -1,30 +1,114 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8">
-    <title>{{ page.title }} - {{ site.title }}</title>
-    <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-    {% for css in page.css %}
-      <link rel="stylesheet" href="{{ css | relative_url }}">
-    {% endfor %}
-  </head>
-  <body data-spy="scroll" data-target="#navbar-verticale" data-offset="0" style="position: relative; height: 100%; overflow-y: scroll;">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>{{ page.title }} - {{ site.title }}</title>
+  <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
+  <link rel="stylesheet" href="{{ "/assets/vendor/fontawesome/all.min.css" | relative_url }}">
+  <link
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+  {% for css in page.css %}
+  <link rel="stylesheet" href="{{ css | relative_url }}">
+  {% endfor %}
+</head>
+<body id="page-top" data-spy="scroll" data-target="#navbar-verticale" data-offset="200" style="position: relative; height: 100%; overflow-y: scroll;">
+<div id="wrapper">
+  <div id="dashboard_nav" class="fixed-top">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    {% include navbar.html%}
+      <li><a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{"index.html" | absolute_url}}">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Covidtracker</sup></div>
+      </a></li>
 
-    {{ content }}
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ "index.html" | absolute_url }}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Accueil</span></a>
+      </li>
 
-    <script src="{{'/assets/vendor/jquery.min.js' | prepend: site.baseurl}}"></script>
-    <script src="{{'/assets/vendor/popper.min.js' | prepend: site.baseurl}}"></script>
-    <script src="{{'/assets/vendor/bootstrap.min.js' | prepend: site.baseurl}}"></script>
-    <script src="{{'/assets/vendor/Chart.bundle.js' | prepend: site.baseurl}}"></script>
-    <script src="{{'/assets/vendor/select2.min.js' | prepend: site.baseurl}}"></script>
-    {% for js in page.js %}
-    <script type="text/javascript">
-      {% include {{ js }} %}
-    </script>
-    {% endfor %}
 
-  </body>
+      {% for item in site.data.navbar %}
+      <li class="sidebar-heading">
+        {{ item.title }}
+      </li>
+      {% for link in item.links %}
+      {% if link.sublinks %}
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#idnav{{ link.name }}"
+           aria-expanded="true" aria-controls="idnav{{ link.name }}">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>{{ link.name }}</span>
+        </a>
+        <div id="idnav{{ link.name }}" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            {% for sublink in link.sublinks %}
+            <a class="collapse-item" href="{{ sublink.link | absolute_url }}">{{ sublink.name}}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ link.link | absolute_url}}">
+          <i class="fas fa-fw
+                            {% if link.icon %}
+                                {{ link.icon }}
+                            {% else %}
+                                fa-chart-area
+                            {% endif %}
+                            "></i>
+          <span>{{ link.name }}</span></a>
+      </li>
+      {% endif %}
+      {% endfor %}
+
+
+      {% endfor %}
+
+
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+  </div>
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      {{ content }}
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<script src="{{'/assets/vendor/jquery.min.js' | prepend: site.baseurl}}"></script>
+<script src="{{'/assets/vendor/popper.min.js' | prepend: site.baseurl}}"></script>
+<script src="{{'/assets/vendor/bootstrap.bundle.min.js' | prepend: site.baseurl}}"></script>
+<script src="{{'/assets/vendor/jquery.easing.min.js' | prepend: site.baseurl }}"></script>
+<script src="{{'/assets/vendor/sb-admin-2.min.js' | prepend: site.baseurl }}"></script>
+<script src="{{'/assets/vendor/Chart.bundle.js' | prepend: site.baseurl}}"></script>
+<script src="{{'/assets/vendor/select2.min.js' | prepend: site.baseurl}}"></script>
+<script type="text/javascript">
+  {% include js/dashboard.js %}
+</script>
+{% for js in page.js %}
+<script type="text/javascript">
+  {% include {{ js }} %}
+</script>
+{% endfor %}
+
+</body>
 </html>

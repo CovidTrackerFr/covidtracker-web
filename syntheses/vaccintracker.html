@@ -1,5 +1,5 @@
 ---
-layout: dashboard
+layout: page
 title: VaccinTracker
 subtitle: Combien de français ont été vaccinés contre la Covid19 ?
 js:
@@ -8,25 +8,21 @@ js:
 css:
 - assets/css/vaccins_proportion.css
 - assets/css/timeline.css
+navbar:
+  - name: Résumé
+    id: cards_vaccins
+  - name: Population vaccinée
+    id: proportion_vaccins
+  - name: Évolution
+    id: evolution_vaccins
+  - name: Répartition géographique
+    id: cartes_vaccins
+  - name: Immunité collective
+    id: vaccins_immunite
+  - name: Vaccins autorisés
+    id: autorisation-des-vaccins
 ---
-<div class="navbar-fixed-full">
-    <div class="row justify-content-md-center" style="background-color: white; margin-right: 0; margin-left: 0">
-        <h1 class="display-1">{{page.title}}</h1>
-        <blockquote class="blockquote"><p class="mb-0">>{{page.subtitle}}</p></blockquote>
-    </div>
-    <div id="navbar-verticale" class="list-group list-group-horizontal">
-        <a class="list-group-item list-group-item-action" href="#cards_vaccins">Résumé</a>
-        <a class="list-group-item list-group-item-action" href="#proportion_vaccins">Population vaccinée</a>
-        <a class="list-group-item list-group-item-action" href="#evolution_vaccins">Évolution</a>
-        <a class="list-group-item list-group-item-action" href="#cartes_vaccins">Répartition géographique</a>
-        <a class="list-group-item list-group-item-action" href="#vaccins_immunite">Immunité collective</a>
-        <a class="list-group-item list-group-item-action" href="#autorisation-des-vaccins">Vaccins autorisés</a>
-    </div>
-</div>
 
-<div class="container-fluid" style="padding-top: 200px">
-
-    <div class="row">
         <p>Quelle proportion des Français a été vaccinée ? Combien faut-il encore vacciner de personnes avant
             d'atteindre
             l'immunité collective ? Quels sont les différents types de vaccins proposés ? Ce tracker permet de

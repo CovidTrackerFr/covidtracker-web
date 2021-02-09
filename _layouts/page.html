@@ -1,14 +1,22 @@
 ---
 layout: default
 ---
-<div class="container-fluid">
-
-    <div class="row justify-content-md-center">
+<div class="navbar-fixed-full">
+    <div class="row justify-content-md-center" style="background-color: white; margin-right: 0; margin-left: 0">
         <h1 class="display-1">{{page.title}}</h1>
         <blockquote class="blockquote"><p class="mb-0">>{{page.subtitle}}</p></blockquote>
     </div>
+    <div id="navbar-verticale" class="list-group list-group-horizontal">
+        {% for item in page.navbar %}
+        <a class="list-group-item list-group-item-action" href="#{{ item.id }}">{{item.name}}</a>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container-fluid" style="padding-top: 200px">
 
     <div class="row">
+
             {{ content }}
     </div>
 
