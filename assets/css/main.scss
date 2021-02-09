@@ -13,6 +13,10 @@
   z-index: 1040;
 }
 
+.navbar-fixed-full .jumbotron {
+  margin-bottom: 0px;
+}
+
 #content-wrapper .navbar-fixed-full {
   width: calc(100% - 6.5rem);
 }
@@ -62,8 +66,8 @@
   display: block;
   position: relative;
   width: 0;
-  height: 180px;
-  margin-top: -180px;
+  height: 250px;
+  margin-top: -250px;
 }
 
 h2 {
