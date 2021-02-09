@@ -85,3 +85,27 @@ h2 {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.jumbotron-billboard {
+  padding: 2rem 1rem;
+}
+.jumbotron-billboard .img {
+  background: #000 url('../img/corona-1920.jpg') top center no-repeat;
+  width: 102%;
+  height: 102%;
+  background-size: cover;
+  position: absolute;
+  top: -1%;
+  left: -1%;
+  overflow: hidden;
+  filter: blur(5px);
+  transform: scale(1.1);
+}
+.jumbotron-billboard .lead {
+  text-shadow: 0 0 5px black;
+}
+.jumbotron {
+  position: relative;
+  overflow: hidden;
+  border-radius: initial;
+}

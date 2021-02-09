@@ -1,0 +1,53 @@
+---
+layout: default
+title: "Covidtracker"
+subtitle: "Statistiques et visualisations de données Covid19"
+js:
+  - js/index_gauges.js
+---
+
+{% include jumbotron.html %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-header text-center font-weight-bold">
+                        Incidence
+                    </div>
+                    <div class="card-body">
+                        <div id="gauge_incidence"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header text-center font-weight-bold">
+                        Taux de positivité
+                    </div>
+                    <div class="card-body">
+                        <div id="gauge_positivite"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header text-center font-weight-bold">
+                        Reff
+                    </div>
+                    <div class="card-body">
+                        <div id="gauge_reff"></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header text-center font-weight-bold">
+                        Tension hospitalière
+                    </div>
+                    <div class="card-body">
+                        <div id="gauge_tension"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            {% twitter https://twitter.com/covidtracker_fr limit=2 %}
+        </div>
+    </div>
+</div>
