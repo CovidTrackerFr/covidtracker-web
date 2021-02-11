@@ -415,42 +415,6 @@ function ajouterObjectifAnnotation(){
     this.lineChart.update()
 }
 
-tableVaccin(table, 0);
-function tableVaccin(tableElt, level){
-    tableElt.innerHTML = "";
-    let first = true;
-    for(let i=0; i<10; i++){
-
-        let row = tableElt.insertRow();
-
-        for(let j=0; j<10; j++){
-            let newrow = row.insertCell(j)
-
-            let caseNb = i*10+j+1
-            if((caseNb <= dejaVaccines && level == 0) || (caseNb <= (dejaVaccines - Math.floor(dejaVaccines))*100) && level == 1){
-                newrow.classList.add("green");
-            } else {
-                if(first) {
-                    if(level == 1) {
-                        newrow.classList.add("blink_me");
-                        newrow.classList.add(dejaVaccines >= 60 ? "grey" : "red");
-                        first = false;
-                    } else {
-                        const subtable = document.createElement("table");
-                        subtable.id = "subtableVaccin";
-                        newrow.appendChild(subtable);
-                        first = false;
-                        tableVaccin(subtable, level+1);
-                    }
-                } else if((caseNb <= 60 && level == 0) || ((dejaVaccines) < 60 && level == 1)) {
-                    newrow.classList.add("red");
-                } else {
-                    newrow.classList.add("grey");
-                }
-            }
-        }
-    }
-}
 
 function majValeurs(){
 
@@ -479,7 +443,6 @@ function majValeurs(){
     document.getElementById("date_maj_2").innerHTML = date + " à " + heure;
     document.getElementById("date_maj_3").innerHTML = date;
     //document.getElementById("date_maj_4").innerHTML = date_stock;
-    tableVaccin(table, 0);
 
 }
 
