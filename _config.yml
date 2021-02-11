@@ -1,7 +1,7 @@
 url: "http://localhost:4000" # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: "" # the subpath of your site, e.g. /blog
 title: "Covidtracker"
-
+tagline: "Statistiques et visualisations de données Covid19"
 defaults:
  - scope:
      path: "assets/img"
@@ -12,6 +12,7 @@ sass:
  load_paths:
   - _sass
   - node_modules
+
 exclude:
  - node_modules
  - LICENSE.txt
@@ -21,7 +22,14 @@ exclude:
  - package-lock.json
  - yarn.lock
  - deploy_npm.sh
+ - .idea
 
-plugins:
- - jekyll-twitter-plugin
+collections:
+ posts:
+  output: true
+  permalink: /news/:categories/:year/:month/:day/:title/
+
+twitter:
+ username: CovidTracker_fr
+ card: summary
 

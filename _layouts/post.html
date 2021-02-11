@@ -1,0 +1,22 @@
+---
+layout: default
+css:
+  - assets/css/news.css
+---
+{% assign months = "Janvier|Février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre" | split: "|" %}
+{% assign m = page.date | date: "%-m" | minus: 1 %}
+{% assign day = page.date | date: "%d" %}
+{% assign month = months[m] %}
+{% assign year = page.date | date: "%Y" %}
+
+{% include jumbotron.html %}
+
+<div class="news-post">
+    <h2 class="news-post-title">{{ page.title }}</h2>
+    <p class="news-post-meta">
+        {{ day }} {{ month }} {{ year }} par <a href="#">{{ page.author }}</a>
+    </p>
+    <p>{{ page.summary }}</p>
+    <hr>
+    {{ content }}
+</div>

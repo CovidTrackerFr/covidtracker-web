@@ -1,0 +1,17 @@
+---
+layout: page
+title: News
+---
+
+<div class="col-md-10">
+    {% for post in site.posts %}
+    <a href="{{ post.url | absolute_url }}">{{post.title}}</a>
+    {% endfor %}
+</div>
+<div class="col-md-2">
+    <div class="p-3">
+        <h4>Anciennes entrées</h4>
+        <ol></ol>
+    </div>
+</div>
+

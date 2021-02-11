@@ -1,3 +1,10 @@
+- links:
+    - name: Accueil
+      icon: fa-tachometer-alt
+      link: /
+    - name: News
+      icon: fa-newspaper
+      link: /news
 - title: Vaccins
   links:
     - name: Vaccintracker

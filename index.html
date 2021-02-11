@@ -19,6 +19,9 @@ js:
                     <div class="card-body">
                         <div id="gauge_incidence"></div>
                     </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Nombre de cas par semaine pour 100k habitants. Le seuil d'alerte est 50.</small>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-header text-center font-weight-bold">
@@ -26,6 +29,9 @@ js:
                     </div>
                     <div class="card-body">
                         <div id="gauge_positivite"></div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Proportion des tests qui sont positifs parmi l'ensemble des tests.</small>
                     </div>
                 </div>
                 <div class="card">
@@ -35,6 +41,9 @@ js:
                     <div class="card-body">
                         <div id="gauge_reff"></div>
                     </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Nombre de personnes contaminées par 1 malade.</small>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-header text-center font-weight-bold">
@@ -43,11 +52,17 @@ js:
                     <div class="card-body">
                         <div id="gauge_tension"></div>
                     </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Nombre de lits de réanimation occupés par les patients Covid19 .</small>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-2">
             {% twitter https://twitter.com/covidtracker_fr limit=2 %}
         </div>
+    </div>
+    <div class="row">
+
     </div>
 </div>
