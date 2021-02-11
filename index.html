@@ -4,6 +4,8 @@ title: "Covidtracker"
 subtitle: "Statistiques et visualisations de données Covid19"
 js:
   - js/index_gauges.js
+css:
+  - assets/css/vaccins_proportion.css
 ---
 
 {% include jumbotron.html %}
@@ -57,7 +59,25 @@ js:
                     </div>
                 </div>
             </div>
+            <p></p>
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-header text-center font-weight-bold">
+                        Carte de l'incidence
+                    </div>
+                    <div class="card-body"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header text-center font-weight-bold">
+                        Proportion de personnes vaccinées
+                    </div>
+                    <div class="card-body">
+                        {% include vaccin_rubik.html style="vertical" %}
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="col-md-2">
             {% twitter https://twitter.com/covidtracker_fr limit=2 %}
         </div>
