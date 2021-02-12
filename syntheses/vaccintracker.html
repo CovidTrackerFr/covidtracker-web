@@ -5,9 +5,11 @@ subtitle: Combien de français ont été vaccinés contre la Covid19 ?
 js:
   - js/covidtracker_utils.js
   - js/vaccintracker.js
+  - js/carte_departement.js
 css:
-- assets/css/vaccins_proportion.css
-- assets/css/timeline.css
+  - assets/css/vaccins_proportion.css
+  - assets/css/timeline.css
+  - assets/css/carte_departement.css
 navbar:
   - name: Résumé
     id: cards_vaccins
@@ -21,6 +23,8 @@ navbar:
     id: vaccins_immunite
   - name: Vaccins autorisés
     id: autorisation-des-vaccins
+  - name: Situation mondiale
+    id: vaccins_monde
 ---
 
 <p>Quelle proportion des Français a été vaccinée ? Combien faut-il encore vacciner de personnes avant
@@ -52,4 +56,8 @@ navbar:
 
 <div class="col-md-12 mt-3">
     {% include_relative elements/vaccins/autorisations.html %}
+</div>
+
+<div class="col-md-12 mt-3">
+    {% include_relative elements/vaccins/monde.html %}
 </div>

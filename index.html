@@ -4,8 +4,10 @@ title: "Covidtracker"
 subtitle: "Statistiques et visualisations de données Covid19"
 js:
   - js/index_gauges.js
+  - js/carte_departement.js
 css:
   - assets/css/vaccins_proportion.css
+  - assets/css/carte_departement.css
 ---
 
 {% include jumbotron.html %}
@@ -14,7 +16,8 @@ css:
     <div class="row">
         <div class="col-md-10">
             <div class="card-deck">
-                <div class="card">
+                <!-- TODO change border-left with variables -->
+                <div class="card border-left-danger">
                     <div class="card-header text-center font-weight-bold">
                         Incidence
                     </div>
@@ -25,7 +28,7 @@ css:
                         <small class="text-muted">Nombre de cas par semaine pour 100k habitants. Le seuil d'alerte est 50.</small>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card border-left-warning">
                     <div class="card-header text-center font-weight-bold">
                         Taux de positivité
                     </div>
@@ -36,7 +39,7 @@ css:
                         <small class="text-muted">Proportion des tests qui sont positifs parmi l'ensemble des tests.</small>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card border-left-warning">
                     <div class="card-header text-center font-weight-bold">
                         Reff
                     </div>
@@ -47,7 +50,7 @@ css:
                         <small class="text-muted">Nombre de personnes contaminées par 1 malade.</small>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card border-left-danger">
                     <div class="card-header text-center font-weight-bold">
                         Tension hospitalière
                     </div>
@@ -65,7 +68,9 @@ css:
                     <div class="card-header text-center font-weight-bold">
                         Carte de l'incidence
                     </div>
-                    <div class="card-body"></div>
+                    <div class="card-body">
+                        {% include carte_departement.html %}
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-header text-center font-weight-bold">

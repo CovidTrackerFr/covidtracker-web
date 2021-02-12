@@ -1,0 +1,70 @@
+
+#listeDepartements {
+    width: 100%;
+}
+
+#map {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#map path {
+    fill: #c4c4cb;
+    stroke: #FFFFFF;
+    stroke-width: 0.6;
+    transition: fill 0.2s, stroke 0.3s;
+    z-index: 1000;
+    transition: fill 2s;
+    fill-opacity: 1;
+}
+
+#map.animated path.selected {
+    transition: fill 0.2s, stroke 0.3s;
+    z-index: 9000;
+    animation: blinker 1.5s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        stroke-width: 2;
+        fill-opacity: 0.5;
+    }
+}
+
+#map path:hover {
+    stroke-width: 2.6;
+}
+
+#map path.selected:hover {
+    stroke-width: 0.6;
+}
+
+#map .separator {
+    stroke: #ccc;
+    fill: none !important;
+    stroke-width: 1.5;
+}
+
+#titreCarte {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#map .separator:hover {
+    stroke: #ccc;
+    fill: none !important;
+}
+
+
+#choixTypeCarte, #choixTypeDonnee {
+    margin-bottom: 20px;
+}
+
+#choixTypeCarte button.selected {
+    font-weight: bold;
+    background: #547096;
+    border-color: #547096;
+    color: #fff;
+}
+
+

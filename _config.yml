@@ -34,10 +34,4 @@ twitter:
  username: CovidTracker_fr
  card: summary
 
-jekyll-spaceship:
- processors:
-  - table-processor
-  - polyfill-processor
-  - media-processor
-  - element-processor
 

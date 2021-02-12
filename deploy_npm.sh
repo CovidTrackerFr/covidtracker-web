@@ -12,7 +12,7 @@ cp node_modules/select2/dist/js/select2.min.js $VENDOR_DIR
 cp node_modules/startbootstrap-sb-admin-2/js/sb-admin-2.min.js $VENDOR_DIR
 cp node_modules/raphael/raphael.min.js $VENDOR_DIR
 cp node_modules/justgage/dist/justgage.min.js $VENDOR_DIR
-
+cp node_modules/moment/min/moment-with-locales.min.js $VENDOR_DIR
 
 mkdir -p $VENDOR_DIR"fontawesome"
 mkdir -p $VENDOR_DIR"webfonts"

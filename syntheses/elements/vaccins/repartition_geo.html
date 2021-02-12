@@ -8,8 +8,8 @@
     Cliquez sur une région pour afficher plus de détails.
 </div>
 <br>
-
-    <div id="choixCarte" class="align-content-center">
+<div class="row">
+    <div id="choixCarte" class="col-md-6 offset-md-3 text-center">
         <div class="btn-group" role="group" aria-label="Choix carte">
             <button id="choixCarteDepartement" type="button" class="btn btn-secondary active">
                 Par département
@@ -17,12 +17,14 @@
             <button id="choixCarteRegion" type="button" class="btn btn-secondary">
                 Par région
             </button>
-        </div>
+        </div><p></p>
     </div>
+    <div id="blocCarteDepartement"  class="col-md-6 offset-md-3">
+        {% include carte_departement.html type="n_dose1_cumsum_pop" %}
+    </div>
+    <div id="blocCarteRegion" class="col-md-6 offset-md-3">
+        <!-- <?php include(__DIR__ . '/carteRegion.php') ?> -->
+    </div>
+</div>
 
-<div id="blocCarteDepartement">
-    {% include carte.html type="departements" %}
-</div>
-<div id="blocCarteRegion" class="hidden">
-    <?php include(__DIR__ . '/carteRegion.php') ?>
-</div>
+
