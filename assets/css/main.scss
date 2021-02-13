@@ -17,27 +17,73 @@
   margin-bottom: 0px;
 }
 
-#content-wrapper .navbar-fixed-full {
-  width: calc(100% - 6.5rem);
-}
-#content-wrapper.toggled .navbar-fixed-full{
+#navbar-simplified {
+  position: fixed;
   width: 100%;
-}
-#content-wrapper {
-  margin-left: 6.5rem;
-}
-#content-wrapper.toggled {
-  margin-left: 0;
+  top: 0;
+  z-index: 1041;
 }
 
 #dashboard_nav {
-  width: 6.5rem;
+  display: none;
 }
 
-#dashboard_nav.toggled {
-  width: 0;
+.jumbotron-title {
+  top: 2rem;
 }
 
+.jumbotron-title .lead {
+  display: none;
+}
+
+.jumbotron-title .display-4 {
+  font-size: 2.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+@media (min-width: 576px) {
+
+  .jumbotron-title {
+    top: initial;
+  }
+
+  .jumbotron-title .lead {
+    display: block;
+  }
+
+  .jumbotron-title .display-4 {
+    font-size: 3.5rem;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  #navbar-simplified {
+    display: none;
+  }
+
+  #content-wrapper .navbar-fixed-full {
+    width: calc(100% - 6.5rem);
+  }
+  #content-wrapper.toggled .navbar-fixed-full{
+    width: 100%;
+  }
+  #content-wrapper {
+    margin-left: 6.5rem;
+  }
+  #content-wrapper.toggled {
+    margin-left: 0;
+  }
+
+  #dashboard_nav {
+    width: 6.5rem;
+    display: block;
+  }
+
+  #dashboard_nav.toggled {
+    width: 0;
+  }
+}
 @media (min-width: 768px) {
   #content-wrapper .navbar-fixed-full {
     width: calc(100% - 14rem);
@@ -54,6 +100,7 @@
 
   #dashboard_nav {
     width: 14rem;
+    display: block;
   }
 
   #dashboard_nav.toggled {
@@ -103,4 +150,10 @@ h2 {
   position: relative;
   overflow: hidden;
   border-radius: initial;
+}
+.jumbotron-title {
+  max-height: 121px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

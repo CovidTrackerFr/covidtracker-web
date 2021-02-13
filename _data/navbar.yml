@@ -19,7 +19,7 @@
       sublinks:
         - name: Vaccins
           link: cartes/vaccinsdepartements
-        - name: hospitalisations
+        - name: Hospitalisations
           link: cartes/hospdepartements
     - name: Région
       sublinks:
