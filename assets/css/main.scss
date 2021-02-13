@@ -61,15 +61,6 @@
   }
 }
 
-.navbar-anchor::before {
-  content: '';
-  display: block;
-  position: relative;
-  width: 0;
-  height: 250px;
-  margin-top: -250px;
-}
-
 h2 {
   border-bottom: 1px solid lightgrey;
 }
