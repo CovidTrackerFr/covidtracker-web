@@ -34,7 +34,7 @@ twitter:
  username: CovidTracker_fr
  card: summary
 
-plugins: ['jekyll-twitter-plugin']
-
+plugins:
+ - jekyll-seo-tag
 
 
