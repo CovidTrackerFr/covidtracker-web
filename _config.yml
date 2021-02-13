@@ -8,7 +8,7 @@ defaults:
    values:
      image: true
 lang: fr_FR
-
+theme: none
 sass:
  load_paths:
   - _sass
