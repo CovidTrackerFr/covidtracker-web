@@ -1,5 +1,5 @@
 url: "https://dev.covidtracker.fr" # the base hostname & protocol for your site, e.g. http://example.com
-baseurl: "/" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 title: "Covidtracker"
 tagline: "Statistiques et visualisations de données Covid19"
 defaults:
