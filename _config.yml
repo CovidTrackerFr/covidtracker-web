@@ -1,5 +1,5 @@
 url: "https://covidtrackerfr.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-baseurl: "/covidtracker-web" # the subpath of your site, e.g. /blog
+baseurl: "/covidtracker-web/" # the subpath of your site, e.g. /blog
 title: "Covidtracker"
 tagline: "Statistiques et visualisations de données Covid19"
 defaults:
@@ -7,7 +7,7 @@ defaults:
      path: "assets/img"
    values:
      image: true
-lang: fr_FR
+lang: fr
 sass:
  load_paths:
   - _sass
