@@ -29,7 +29,7 @@ jobs:
         with:
           switches: -r --exclude='/files'
           path: _site/
-        remote_path: ${{ secrets.DEPLOY_PATH }}
-        remote_host: ${{ secrets.DEPLOY_IP }}
-        remote_user: ubuntu
-        remote_key: ${{ secrets.DEPLOY_KEY }}
+          remote_path: ${{ secrets.DEPLOY_PATH }}
+          remote_host: ${{ secrets.DEPLOY_IP }}
+          remote_user: ubuntu
+          remote_key: ${{ secrets.DEPLOY_KEY }}
