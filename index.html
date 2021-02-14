@@ -15,71 +15,85 @@ css:
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10">
-            <div class="card-deck">
+            <div class="row">
                 <!-- TODO change border-left with variables -->
-                <div class="card border-left-danger">
-                    <div class="card-header text-center font-weight-bold">
-                        Incidence
-                    </div>
-                    <div class="card-body">
-                        <div id="gauge_incidence"></div>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Nombre de cas par semaine pour 100k habitants. Le seuil d'alerte est 50.</small>
-                    </div>
-                </div>
-                <div class="card border-left-warning">
-                    <div class="card-header text-center font-weight-bold">
-                        Taux de positivité
-                    </div>
-                    <div class="card-body">
-                        <div id="gauge_positivite"></div>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Proportion des tests qui sont positifs parmi l'ensemble des tests.</small>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card border-left-danger">
+                        <div class="card-header text-center font-weight-bold">
+                            Incidence
+                        </div>
+                        <div class="card-body">
+                            <div id="gauge_incidence"></div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Nombre de cas par semaine pour 100k habitants. Le seuil d'alerte est 50.</small>
+                        </div>
                     </div>
                 </div>
-                <div class="card border-left-warning">
-                    <div class="card-header text-center font-weight-bold">
-                        Reff
-                    </div>
-                    <div class="card-body">
-                        <div id="gauge_reff"></div>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Nombre de personnes contaminées par 1 malade.</small>
-                    </div>
-                </div>
-                <div class="card border-left-danger">
-                    <div class="card-header text-center font-weight-bold">
-                        Tension hospitalière
-                    </div>
-                    <div class="card-body">
-                        <div id="gauge_tension"></div>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Nombre de lits de réanimation occupés par les patients Covid19 .</small>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card border-left-warning">
+                        <div class="card-header text-center font-weight-bold">
+                            Taux de positivité
+                        </div>
+                        <div class="card-body">
+                            <div id="gauge_positivite"></div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Proportion des tests qui sont positifs parmi l'ensemble des tests.</small>
+                        </div>
                     </div>
                 </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card border-left-warning">
+                        <div class="card-header text-center font-weight-bold">
+                            Reff
+                        </div>
+                        <div class="card-body">
+                            <div id="gauge_reff"></div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Nombre de personnes contaminées par 1 malade.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="card border-left-danger">
+                        <div class="card-header text-center font-weight-bold">
+                            Tension hospitalière
+                        </div>
+                        <div class="card-body">
+                            <div id="gauge_tension"></div>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Nombre de lits de réanimation occupés par les patients Covid19 .</small>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <p></p>
-            <div class="card-deck">
-                <div class="card">
-                    <div class="card-header text-center font-weight-bold">
-                        Carte de l'incidence
-                    </div>
-                    <div class="card-body">
-                        {% include carte_departement.html %}
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header text-center font-weight-bold">
-                        Proportion de personnes vaccinées
-                    </div>
-                    <div class="card-body">
-                        {% include vaccin_rubik.html style="vertical" %}
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center font-weight-bold">
+                            Carte de l'incidence
+                        </div>
+                        <div class="card-body">
+                            {% include carte_departement.html %}
+                        </div>
                     </div>
                 </div>
+                <div class="col-12 col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center font-weight-bold">
+                            Proportion de personnes vaccinées
+                        </div>
+                        <div class="card-body">
+                            {% include vaccin_rubik.html style="vertical" %}
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
