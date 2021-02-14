@@ -1,0 +1,11 @@
+{
+  "date": "2021-02-14T18:25:43.511Z",
+  "national": {
+    "incidence": 256,
+    "incidence_tendance": 1,
+    "positivite": 6.5,
+    "positivite_tendance": -1,
+    "reff": 0.98,
+    "reff_tendance": -1
+  }
+}

@@ -1,9 +1,10 @@
 var g = new JustGage({
     id: "gauge_incidence",
-    value: 257,
+    value: $("#gauge_incidence").data('value'),
     min: 0,
     max: 250,
-    title: "Incidence",
+    symbol: $("#gauge_incidence").data('symbol'),
+    title: $("#gauge_incidence").data('title'),
     pointer: true,
     pointerOptions: {
         toplength: -15,
@@ -39,7 +40,7 @@ var g = new JustGage({
 
 var g = new JustGage({
     id: "gauge_positivite",
-    value: 6.5,
+    value: $("#gauge_positivite").data('value'),
     min: 0,
     max: 15,
     decimals: 1,
@@ -55,7 +56,7 @@ var g = new JustGage({
         stroke_linecap: 'round'
     },
     title: "Taux de positivité",
-    symbol: "%",
+    symbol: $("#gauge_positivite").data('symbol'),
     customSectors: {
         percents: false,
         ranges: [
@@ -80,12 +81,13 @@ var g = new JustGage({
 
 var g = new JustGage({
     id: "gauge_reff",
-    value: 1.015,
+    value: $("#gauge_reff").data('value'),
     min: 0,
     max: 3,
     decimals: 2,
     title: "Reff",
     pointer: true,
+    symbol: $("#gauge_reff").data('symbol'),
     pointerOptions: {
         toplength: -15,
         bottomlength: 10,
@@ -118,10 +120,10 @@ var g = new JustGage({
 
 var g = new JustGage({
     id: "gauge_tension",
-    value: 65,
+    value: $("#gauge_tension").data('value'),
     min: 0,
     max: 100,
-    symbol: "%",
+    symbol: $("#gauge_tension").data('symbol'),
     pointer: true,
     pointerOptions: {
         toplength: -15,
