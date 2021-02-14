@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
   <title>{{ page.title }} - {{ site.title }}</title>
-  <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-  <link rel="stylesheet" href="{{ "/assets/vendor/fontawesome/all.min.css" | relative_url }}">
+  <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl}}">
+  <link rel="stylesheet" href="{{ "/assets/vendor/fontawesome/all.min.css" | prepend: site.baseurl }}">
   <link
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
   {% for css in layout.css %}
-  <link rel="stylesheet" href="{{ css | relative_url }}">
+  <link rel="stylesheet" href="{{ css | prepend: site.baseurl }}">
   {% endfor %}
   {% for css in page.css %}
-  <link rel="stylesheet" href="{{ css | relative_url }}">
+  <link rel="stylesheet" href="{{ css | prepend: site.baseurl }}">
   {% endfor %}
   {% for js in page.headjs %}
   <script src="{{ js | prepend: site.baseurl }}"></script>
