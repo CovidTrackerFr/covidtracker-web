@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
   <title>{{ page.title }} - {{ site.title }}</title>
-  <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl}}">
+  <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl }}">
   <link rel="stylesheet" href="{{ "/assets/vendor/fontawesome/all.min.css" | prepend: site.baseurl }}">
   <link
           href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -27,7 +27,7 @@
   <div id="dashboard_nav" class="fixed-top">
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-      <li><a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{"index.html" | absolute_url}}">
+      <li><a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{"index.html" | prepend: site.baseurl }}">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -51,14 +51,14 @@
               <div id="idnav{{ link.name }}" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                   {% for sublink in link.sublinks %}
-                    <a class="collapse-item" href="{{ sublink.link | absolute_url }}">{{ sublink.name}}</a>
+                    <a class="collapse-item" href="{{ sublink.link | prepend: site.baseurl }}">{{ sublink.name}}</a>
                   {% endfor %}
                 </div>
               </div>
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ link.link | absolute_url}}">
+              <a class="nav-link" href="{{ link.link | prepend: site.baseurl }}">
                 <i class="fas fa-fw
                                   {% if link.icon %}
                                       {{ link.icon }}
