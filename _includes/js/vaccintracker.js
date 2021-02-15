@@ -1,3 +1,24 @@
+
+jQuery(document).ready(function ($) {
+    $('#choixCarteDepartement').click(function(){
+        $('#blocCarteDepartement').removeClass('hidden');
+        $('#blocCarteRegion').addClass('hidden');
+
+        $('#choixCarteDepartement').addClass('active');
+        $('#choixCarteRegion').removeClass('active');
+    });
+
+    $('#choixCarteRegion').click(function(){
+        $('#blocCarteRegion').removeClass('hidden');
+        $('#blocCarteDepartement').addClass('hidden');
+
+        $('#choixCarteRegion').addClass('active');
+        $('#choixCarteDepartement').removeClass('active');
+    });
+});
+
+
+
 const OBJECTIF_FIN_JANVIER = 1000000 // 1_000_000
 const OBJECTIF_FIN_AOUT = 52000000 // 1_000_000
 var data;
@@ -12,6 +33,11 @@ var restantaVaccinerImmunite;
 var restantaVaccinerAutres = 100
 var objectifQuotidien;
 var dateProjeteeObjectif;
+var dejaVaccines2Doses;
+var dejaVaccines2DosesNb;
+var livraisons;
+
+var somme_doses_rolling={};
 
 var dosesRecues = 560000;
 
@@ -27,23 +53,7 @@ var contenu_news = [];
 var updated = false;
 const table = document.getElementById("tableauVaccin");
 
-fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data/output/vacsi-fra-2doses.json', {cache: 'no-cache'})
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("HTTP error " + response.status);
-        }
-        return response.json();
-    })
-    .then(json => {
-        this.vaccines_2doses = json;
-        maj2Doses();
-    })
-    .catch(function (error) {
-            this.dataError = true;
-            console.log(error.message)
-        }
-    )
-
+// Stocks
 fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data_stock.csv', {cache: 'no-cache'})
     .then(response => {
         if (!response.ok) {
@@ -61,59 +71,15 @@ fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data
             this.cumul_stock += parseInt(value[1]);
             this.cumul_stock_array.push(cumul_stock);
         })
-
         fetchOtherData();
-
     })
-    .catch(function (error) {
+    .catch(function () {
             this.dataError = true;
-            console.log(error.message)
+            console.log("error1")
         }
     )
 
-
 function fetchOtherData(){
-    // Get data from Guillaume csv
-    fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data.csv', {cache: 'no-cache'})
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("HTTP error " + response.status);
-            }
-            return response.text();
-        })
-        .then(csv => {
-            dont_do_that;
-            this.data = csv;
-            array_data = CSVToArray(csv, ",");
-            array_data.slice(1, array_data.length-1).map((value, idx) => {
-                nb_vaccines.push({
-                    date: value[0],
-                    heure: value[2],
-                    n_dose1: value[1],
-                    source: value[3]
-                });
-            });
-
-            if(updated) { // si on a les données des 2 sources (csv covidtracker + gouv)
-                nb_vaccines = nb_vaccines.filter((v,i,a)=>a.findIndex(t=>(t.date == v.date))===i); // suppression doublons
-                nb_vaccines = nb_vaccines.sortBy('date'); // tri par date
-                dejaVaccinesNb = nb_vaccines[nb_vaccines.length-1].n_dose1
-                dejaVaccines = dejaVaccinesNb*100/67000000;
-                restantaVaccinerImmunite = 60 - dejaVaccines
-                this.dateProjeteeObjectif = calculerDateProjeteeObjectif();
-                this.objectifQuotidien = calculerObjectif();
-                majValeurs();
-                buildLineChart();
-            } else {
-                updated = true;
-            }
-        })
-        .catch(function (error) {
-                this.dataError = true;
-                console.log(error.message)
-            }
-        )
-
     // Get data from health ministry csv
     fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data/output/vacsi-fra.json', {cache: 'no-cache'}) //https://www.data.gouv.fr/fr/datasets/r/b234a041-b5ea-4954-889b-67e64a25ce0d
         .then(response => {
@@ -135,29 +101,83 @@ function fetchOtherData(){
                 });
             })
 
-            if(true) { // si on a les données des 2 sources (csv covidtracker + gouv)
-                nb_vaccines = nb_vaccines.filter((v,i,a)=>a.findIndex(t=>(t.date == v.date))===i); // suppression doublons
-                nb_vaccines = nb_vaccines.sortBy('date'); // tri par date
-                dejaVaccinesNb = nb_vaccines[nb_vaccines.length-1].n_dose1
-                dejaVaccines = dejaVaccinesNb*100/67000000;
-                restantaVaccinerImmunite = 60 - dejaVaccines
-                this.dateProjeteeObjectif = calculerDateProjeteeObjectif();
-                this.objectifQuotidien = calculerObjectif();
-                majValeurs();
-                buildLineChart();
-            } else {
-                updated = true;
+            nb_vaccines = nb_vaccines.filter((v,i,a)=>a.findIndex(t=>(t.date == v.date))===i); // suppression doublons
+            nb_vaccines = nb_vaccines.sortBy('date'); // tri par date
+            dejaVaccinesNb = nb_vaccines[nb_vaccines.length-1].n_dose1
+            dejaVaccines = dejaVaccinesNb*100/67000000;
+            restantaVaccinerImmunite = 60 - dejaVaccines
+            this.objectifQuotidien = calculerObjectif();
+            fetch2ndDosesData();
+
+
+        })
+        .catch(function () {
+                this.dataError = true;
+                console.log("error4")
             }
+        )
+
+}
+
+function fetch2ndDosesData(){
+    fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data/output/vacsi-fra-2doses.json', {cache: 'no-cache'})
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then(json => {
+            this.vaccines_2doses = json;
+            this.dateProjeteeObjectif = calculerDateProjeteeObjectif();
+            majValeurs();
+            maj2Doses();
+            fetchStock();
+
         })
         .catch(function (error) {
                 this.dataError = true;
                 console.log(error.message);
             }
         )
+}
+
+fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data/output/somme-doses-rolling.json', {cache: 'no-cache'})
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("HTTP error " + response.status);
+        }
+        return response.json();
+    })
+    .then(json => {
+        this.somme_doses_rolling = json;
+    })
+    .catch(function () {
+            this.dataError = true;
+            console.log("errorY")
+        }
+    )
+function fetchStock(){
+    fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data/output/livraisons.json', {cache: 'no-cache'})
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then(json => {
+            this.livraisons = json;
+            majValeursStock();
+            buildLineChart();
+        })
+        .catch(function () {
+                this.dataError = true;
+                console.log("errorStock")
+            }
+        )
 
 }
 var lineChart;
-
 function calculerObjectif(){
 
     let one_day = (1000 * 60 * 60 * 24)
@@ -174,10 +194,14 @@ function calculerObjectif(){
 
 function maj2Doses(){
     //log(vaccines_2doses)
-    let N = vaccines_2doses.n_dose2.length
-    let vaccines_2doses_24h = vaccines_2doses.n_dose2[N-1] - vaccines_2doses.n_dose2[N-2]
 
-    document.getElementById("nb_vaccines_2_doses").innerHTML = numberWithSpaces(vaccines_2doses.n_dose2[N-1]);
+    let N = vaccines_2doses.n_dose2_cumsum.length
+    let vaccines_2doses_24h = vaccines_2doses.n_dose2_cumsum[N-1] - vaccines_2doses.n_dose2_cumsum[N-2]
+
+    dejaVaccines2DosesNb = vaccines_2doses.n_dose2_cumsum[N-1];
+    dejaVaccines2Doses = dejaVaccines2DosesNb*100/67000000;
+
+    document.getElementById("nb_vaccines_2_doses").innerHTML = numberWithSpaces(dejaVaccines2DosesNb);
     document.getElementById("nb_vaccines_24h_2_doses").innerHTML = numberWithSpaces(vaccines_2doses_24h);
 
     date=vaccines_2doses.jour[N-1]
@@ -187,40 +211,52 @@ function maj2Doses(){
 
 function calculerDateProjeteeObjectif () {
     const objectif = OBJECTIF_FIN_AOUT
-    const indexDerniereMaj = nb_vaccines.length - 1;
-    const indexDebutFenetre = Math.max(0, indexDerniereMaj - 7)
-    const derniereMaj = Date.parse(nb_vaccines[indexDerniereMaj].date)
-    const resteAVacciner = objectif*2 - Number(nb_vaccines[indexDerniereMaj].n_dose1)
-    const differentielVaccinesFenetre = Number(nb_vaccines[indexDerniereMaj].n_dose1) - Number(nb_vaccines[indexDebutFenetre].n_dose1)
-    differentielVaccinesParJour = differentielVaccinesFenetre / (indexDerniereMaj - indexDebutFenetre)
-    const oneDay = (1000 * 60 * 60 * 24)
-    const nbJoursAvantObjectif = Math.round(resteAVacciner / differentielVaccinesParJour)
-    return new Date(derniereMaj + (oneDay * nbJoursAvantObjectif))
+    const vdose1 = ( nb_vaccines[nb_vaccines.length -1].n_dose1 - nb_vaccines[nb_vaccines.length -8].n_dose1 ) / 7
+    const cumsum = vaccines_2doses.n_dose2_cumsum
+    const vdose2 = ( cumsum[cumsum.length -1] - cumsum[cumsum.length -8] ) / 7
+    const resteAVaccinerDose1 = objectif - nb_vaccines[nb_vaccines.length -1].n_dose1
+    const joursDose1Complete = Math.ceil(resteAVaccinerDose1 / vdose1)
+    const nDose2quandD1Complete = Math.floor(joursDose1Complete * vdose2)
+    const resteAVaccinerDose2 = objectif - nDose2quandD1Complete
+    const joursDose2Complete = Math.ceil(resteAVaccinerDose2 / (vdose2+vdose1))
+    const date = new Date(nb_vaccines[nb_vaccines.length -1].date)
+    date.setDate(date.getDate() + joursDose2Complete + joursDose1Complete)
+    return  date
 }
 
 function buildLineChart(){
 
     var ctx = document.getElementById('lineVacChart').getContext('2d');
     let data_values = nb_vaccines.map(val => ({x: val.date, y:parseInt(val.n_dose1)}));
-    let data_object_stock = cumul_stock_array.map((value, idx)=> ({x: dates_stock[idx], y: parseInt(value)}))
-    let data_values_2doses = vaccines_2doses.n_dose2.map((value, idx)=> ({x: vaccines_2doses.jour[idx], y: parseInt(value)}))
+    //let data_object_stock = cumul_stock_array.map((value, idx)=> ({x: dates_stock[idx], y: parseInt(value)}))
+    let data_object_stock = livraisons.nb_doses_tot_cumsum.map((value, idx)=> ({x: livraisons.jour[idx], y: parseInt(value)}))
+
+    let data_values_2doses = vaccines_2doses.n_dose2_cumsum.map((value, idx)=> ({x: vaccines_2doses.jour[idx], y: parseInt(value)}))
+    let labels=nb_vaccines.map(val => val.date)
+
+    debut_2nd_doses = labels.map((value, idx) => ({x: value, y:0}))
+    let N_tot = labels.length;
+    let N2 = data_values_2doses.length;
+
+    let max_value = livraisons.nb_doses_tot_cumsum[livraisons.nb_doses_tot_cumsum.length-1]
 
     this.lineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            //labels: nb_vaccines.map(val => val.date),
+            labels: labels,
             datasets: [
                 {
-                    label: 'Cumul vaccinés (2 doses) ',
-                    data: data_values_2doses,
+                    yAxisID:"injections",
+                    label: 'Secondes doses injectées ',
+                    data: debut_2nd_doses.slice(0,N_tot-N2).concat(data_values_2doses),
                     borderWidth: 3,
                     backgroundColor: '#1796e6',
                     borderColor: '#127aba',
                     pointRadius: 2,
-                    steppedLine: true,
                 },
                 {
-                    label: 'Cumul vaccinés (1 ou 2 doses) ',
+                    yAxisID:"injections",
+                    label: 'Premières doses injectées ',
                     data: data_values,
                     borderWidth: 3,
                     backgroundColor: '#a1cbe6',
@@ -229,7 +265,8 @@ function buildLineChart(){
                     cubicInterpolationMode: 'monotone',
                 },
                 {
-                    label: 'Doses réceptionnées (cumul) ',
+                    yAxisID:"stock",
+                    label: 'Doses réceptionnées ou officiellement attendues ',
                     data: data_object_stock,
                     borderWidth: 3,
                     borderColor: 'grey',
@@ -258,12 +295,32 @@ function buildLineChart(){
             },
             scales: {
                 yAxes: [{
+                    id:"injections",
+                    stacked: true,
+                    gridLines: {
+                        display: false
+                    },
+                    ticks : {
+                        max: max_value,
+                        min: 0,
+                    }
+                },{
+                    id:"stock",
+                    display: false,
                     stacked: false,
                     gridLines: {
                         display: false
+                    },
+                    ticks : {
+                        max: max_value,
+                        min: 0,
                     }
                 }],
                 xAxes: [{
+                    stacked: true,
+                    ticks:{
+                        source: 'auto'
+                    },
                     type: 'time',
                     distribution: 'linear',
                     gridLines: {
@@ -295,66 +352,64 @@ function rollingMean(data){
 function buildBarChart(data){
     var ctx = document.getElementById('lineVacChart').getContext('2d');
     let labels = nb_vaccines.map(val => val.date)
-    let data_values = data.map((value, idx) => ({x: labels[idx], y: value}))
-    let rollingMeanValues = rollingMean(data).map((value, idx)=> ({x: labels[idx+3], y: Math.round(value)}))
+    let data_values = data.map((value, idx) => ({x: labels[idx], y: parseInt(value)}))
+    //let rollingMeanValues = rollingMean(data).map((value, idx)=> ({x: labels[idx+3], y: Math.round(value)}))
+    let rollingMeanValues = somme_doses_rolling.n_dose_rolling.map((value, idx) => ({x:somme_doses_rolling.jour[idx], y:value}))
+    let data_values_2doses = vaccines_2doses.n_dose2.map((value, idx)=> ({x: vaccines_2doses.jour[idx], y: parseInt(value)}))
+
+    debut_2nd_doses = labels.map((value, idx) => ({x: value, y:0}))
+    let N_tot = labels.length;
+    let N2 = data_values_2doses.length;
 
     this.lineChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
-            datasets: [{
-                label: 'Nombre quotidien de vaccinés ',
-                data: data_values,
-                borderWidth: 3,
-                backgroundColor: 'rgba(0, 168, 235, 0.5)',
-                borderColor: 'rgba(0, 168, 235, 0)',
-                cubicInterpolationMode: 'monotone'
-            },
+            datasets: [
                 {
-                    label: 'Moyenne quotidienne ',
+                    label: 'Moyenne quotidienne (total doses injectées) ',
                     data: rollingMeanValues,
                     type: 'line',
-                    borderColor: 'rgba(0, 168, 235, 1)',
+                    borderColor: 'black',
+                    pointBackgroundColor: 'rgba(0, 0, 0, 1',
                     backgroundColor: 'rgba(0, 168, 235, 0)',
-                }
+                },
+                {
+                    label: 'Nombre de première doses ',
+                    data: data_values,
+                    backgroundColor: 'rgba(0, 168, 235, 0.5)',
+                },
+                {
+                    label: 'Nombre de deuxième doses ',
+                    data: debut_2nd_doses.slice(0,N_tot-N2).concat(data_values_2doses),
+                    backgroundColor: '#1796e6',
+                },
+
             ]
         },
         options: {
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        let value = data['datasets'][tooltipItem.datasetIndex]['data'][tooltipItem['index']].y.toString().split(/(?=(?:...)*$)/).join(' ');
-                        return data['datasets'][tooltipItem.datasetIndex]['label'] + ': ' + value;
-                    }
-                }
-            },
+
             maintainAspectRatio: false,
             legend: {
                 display: true
             },
             scales: {
                 yAxes: [{
+                    id: 'injections',
+                    stacked: true,
+                    position: 'left',
                     gridLines: {
                         display: false
-                    },
-                    ticks: {
-                        min: 0
-                    },
-
+                    }
                 }],
                 xAxes: [{
+                    offset: true,
+                    stacked: true,
+                    type: 'time',
+                    distribution: 'linear',
                     gridLines: {
                         display: false
-                    },
-                    ticks: {
-                        maxRotation: 0,
-                        minRotation: 0,
-                        maxTicksLimit: 6,
-                        callback: function(value, index, values) {
-                            return value.slice(8) + "/" + value.slice(5, 7);
-                        }
                     }
-
                 }]
             },
             annotation: {
@@ -369,7 +424,8 @@ function buildBarChart(data){
 function typeDonneesChart(){
     type_donnees = document.getElementById("type").value
     this.lineChart.destroy()
-    document.getElementById("objectif").checked=false;
+    //document.getElementById("objectif").checked=false;
+
     if (type_donnees=="quotidien"){
 
         nb_vaccines_quot = [nb_vaccines[0].total]
@@ -389,14 +445,17 @@ function ajouterObjectifAnnotation(){
     else {
         obj = OBJECTIF_FIN_AOUT;
     }
+    console.log(this.lineChart.options.annotation)
+
     if (this.lineChart.options.annotation.annotations.length==0){
+
         this.lineChart.options.annotation.annotations.push(
             {
                 drawTime: "afterDatasetsDraw",
                 id: "hline",
                 type: "line",
                 mode: "horizontal",
-                scaleID: "y-axis-0",
+                scaleID: "injections",
                 value: obj,
                 borderColor: "green",
                 borderWidth: 3,
@@ -412,37 +471,66 @@ function ajouterObjectifAnnotation(){
     } else {
         this.lineChart.options.annotation.annotations = [];
     }
+    console.log("hey")
     this.lineChart.update()
 }
 
+function obtenirCumulStockActuel(){
+
+    var idx_max = 0;
+    let today = moment();
+
+    livraisons.jour.map((value, idx)=>{
+
+        if(moment(value) <= today){
+            idx_max = idx
+        }
+    })
+
+    return {"jour": livraisons.jour[idx_max], "valeur": livraisons.nb_doses_tot_cumsum[idx_max]};
+}
+
+function majValeursStock(){
+    results = obtenirCumulStockActuel();
+    document.getElementById("nb_doses").innerHTML = numberWithSpaces(results["valeur"]);
+    document.getElementById("date_maj_4").innerHTML = formateDate(results["jour"]);
+
+}
+
+function formateDate(date){
+    return date.slice(8) + "/" + date.slice(5, 7)
+}
 
 function majValeurs(){
+    //let N = vaccines_2doses.n_dose2_cumsum.length
+    //let deuxiemeDoses = vaccines_2doses.n_dose2_cumsum[N-1];
 
-    if (nb_vaccines[nb_vaccines.length-1].source == "Estimation"){
-        document.getElementById("estimation_str").innerHTML = "⚠️ Données non consolidées";
-    }
+    //if (nb_vaccines[nb_vaccines.length-1].source == "Estimation"){
+    //    document.getElementById("estimation_str").innerHTML = "⚠️ Données non consolidées";
+    //}
 
-    document.getElementById("nb_vaccines").innerHTML = numberWithSpaces(dejaVaccinesNb);
-    document.getElementById("nb_vaccines_24h").innerHTML = numberWithSpaces(dejaVaccinesNb - nb_vaccines[nb_vaccines.length-2].n_dose1);
-    document.getElementById("nb_doses").innerHTML = numberWithSpaces(cumul_stock);
+    //document.getElementById("nb_doses_injectees").innerHTML = numberWithSpaces(dejaVaccinesNb);
+    //document.getElementById("nb_doses_injectees_24h").innerHTML = numberWithSpaces(dejaVaccinesNb - nb_vaccines[nb_vaccines.length-2].n_dose1);
+
     document.getElementById("proportionVaccinesMax").innerHTML = (Math.round(dejaVaccines*10000000)/10000000).toFixed(2);
+    console.log(dejaVaccines2Doses);
     //document.getElementById("proportionVaccinesMin").innerHTML = (Math.round(dejaVaccines/2*10000000)/10000000).toFixed(2);
     //document.getElementById("proportion_doses").innerHTML = (dejaVaccinesNb/cumul_stock*100).toFixed(1);
 
     document.getElementById("proportionAVaccinerImmu").innerHTML = (Math.round(restantaVaccinerImmunite*10000000)/10000000).toFixed(2);
     document.getElementById("objectif_quotidien").innerHTML = numberWithSpaces(objectifQuotidien);
-    //document.getElementById("date_projetee_objectif").innerHTML = formaterDate(dateProjeteeObjectif);
+    document.getElementById("date_projetee_objectif").innerHTML = formaterDate(dateProjeteeObjectif);
     date = nb_vaccines[nb_vaccines.length-1].date
     date = date.slice(8) + "/" + date.slice(5, 7)
-    heure = nb_vaccines[nb_vaccines.length-1].heure
+    //heure = nb_vaccines[nb_vaccines.length-1].heure
 
     date_stock = dates_stock[dates_stock.length-1]
-    date_stock = date_stock.slice(8) + "/" + date_stock.slice(5, 7)
+    date_stock = formateDate(date_stock);
 
     document.getElementById("date_maj_1").innerHTML = date;
-    document.getElementById("date_maj_2").innerHTML = date + " à " + heure;
+    //document.getElementById("date_maj_2").innerHTML = date + " à " + heure;
     document.getElementById("date_maj_3").innerHTML = date;
-    //document.getElementById("date_maj_4").innerHTML = date_stock;
+
 
 }
 

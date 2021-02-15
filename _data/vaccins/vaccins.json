@@ -1,5 +1,7 @@
 {
   "population_vaccinnee": 1930000,
-  "proportion_vaccinnee": 2.42,
+  "proportion_vaccinnee": 3.42,
+  "population_vaccinnee_2doses": 640000,
+  "proportion_vaccinnee_2doses":  1.12,
   "cible_immunite": 57.58
 }

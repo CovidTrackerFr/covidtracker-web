@@ -43,5 +43,9 @@
 {% endif %}
 
 <script type="text/javascript">
-    tableVaccin(document.getElementById("tableauVaccin"), 0, {{ site.data.vaccins.vaccins["proportion_vaccinnee"] }})
+    tableVaccin(document.getElementById("tableauVaccin"),
+        0,
+        {{ site.data.vaccins.vaccins["proportion_vaccinnee"] }},
+        {{ site.data.vaccins.vaccins["proportion_vaccinnee_2doses"]}}
+    );
 </script>
