@@ -153,7 +153,10 @@ css:
                             Proportion de personnes vaccinées
                         </div>
                         <div class="card-body">
-                            {% include vaccin_rubik.html style="vertical" %}
+                            <div style="text-align: center">
+                                {% include vaccin_rubik.html part="tableau" %}
+                            </div>
+                            {% include vaccin_rubik.html part="description" %}
                         </div>
                     </div>
                 </div>
