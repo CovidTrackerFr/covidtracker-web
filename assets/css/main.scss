@@ -163,9 +163,10 @@ footer.sticky-footer {
 }
 
 .zoomed {
-  transform: scale(1.5) translate(-25%, -25%);
+  //transform applied by js
   position: fixed;
   top: 50%;
   z-index: 10000;
   left: 50%;
+  transform-origin: top left;
 }

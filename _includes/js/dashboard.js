@@ -62,7 +62,15 @@
     /* ******* Zoomable Cards ******** */
     /* ******************************* */
     $(document).on('click', '.card.zoomable .card-header', function(e) {
-        $(this).closest('.card.zoomable').toggleClass('zoomed');
+        let thiscard =  $(this).closest('.card.zoomable');
+        thiscard.toggleClass('zoomed');
+        if(thiscard.hasClass('zoomed')) {
+            let scale = 1/Math.max(thiscard[0].clientWidth/window.innerWidth,thiscard[0].clientHeight/window.innerHeight);
+            let pos = (scale-1)*95;
+            thiscard.css('transform', 'scale('+scale+') translate(-50%, -50%)');
+        } else {
+            thiscard.css('transform', '');
+        }
         $(this).children('i').toggleClass('fa-expand-arrows-alt fa-compress-arrows-alt');
     });
 
@@ -79,11 +87,12 @@
         if (!container.is(e.target) && container.has(e.target).length === 0)
         {
             container.removeClass('zoomed');
+            container.css('transform', '');
             container.children('i').toggleClass('fa-expand-arrows-alt fa-compress-arrows-alt');
         }
     });
     /* ******************************* */
     /* **** End of Zoomable Cards **** */
     /* ******************************* */
-    
+
 })(jQuery);
