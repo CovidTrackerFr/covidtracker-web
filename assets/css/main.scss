@@ -161,3 +161,11 @@ h2 {
 footer.sticky-footer {
   padding: 0.8rem 0 !important;
 }
+
+.zoomed {
+  transform: scale(1.5) translate(-25%, -25%);
+  position: fixed;
+  top: 50%;
+  z-index: 10000;
+  left: 50%;
+}

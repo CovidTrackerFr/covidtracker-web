@@ -58,5 +58,32 @@
         e.preventDefault();
     });
 
+    /* ******************************* */
+    /* ******* Zoomable Cards ******** */
+    /* ******************************* */
+    $(document).on('click', '.card.zoomable .card-header', function(e) {
+        $(this).closest('.card.zoomable').toggleClass('zoomed');
+        $(this).children('i').toggleClass('fa-expand-arrows-alt fa-compress-arrows-alt');
+    });
 
+    $('.card.zoomable .card-header').each(function(index, elt){
+        $(this).append("<i class='fas fa-expand-arrows-alt text-muted float-right' style='padding-top:0.25rem'></i>");
+    });
+
+    //close zoomed card if click outside
+    $(document).mouseup(function(e)
+    {
+        var container = $(".card.zoomable.zoomed");
+
+        // if the target of the click isn't the container nor a descendant of the container
+        if (!container.is(e.target) && container.has(e.target).length === 0)
+        {
+            container.removeClass('zoomed');
+            container.children('i').toggleClass('fa-expand-arrows-alt fa-compress-arrows-alt');
+        }
+    });
+    /* ******************************* */
+    /* **** End of Zoomable Cards **** */
+    /* ******************************* */
+    
 })(jQuery);
