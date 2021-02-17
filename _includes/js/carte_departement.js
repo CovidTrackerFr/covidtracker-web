@@ -6,10 +6,33 @@ jQuery(document).ready(function ($) {
 
         var valeurs_n_dose1_cumsum_pop = [">", "5.5", "5", "4.5", "4", "3.5", "3", "2.5", "2", "1.5"];
         //var couleurs_n_dose1_cumsum_pop = ["#98ac3b", "#3c0000", "#c80000", "#f95228"];
-        var couleurs_n_dose1_cumsum_pop = ["#0076bf", "#1796e6",  "#2e9fe6", "#45a8e6",  "#5cb1e6", "#73bae6", "#8ac2e6", "#a1cbe6", "#b8d4e6",  "#cfdde6"]
+        var couleurs_n_dose1_cumsum_pop = [
+            "#0076bf",
+            "#1796e6",
+            "#2e9fe6",
+            "#45a8e6",
+            "#5cb1e6",
+            "#73bae6",
+            "#8ac2e6",
+            "#a1cbe6",
+            "#b8d4e6",
+            "#cfdde6"]
 
         var valeurs_cas_12_couleurs = [">", "500", "450", "400", "350", "300", "250", "200", "150", "100", "75", "50", "25"];
-        var couleurs_cas_12_couleurs = ["#3c0000", "#4c0000", "#6a0000", "#840000", "#a00000", "#c40001", "#d50100", "#e20001", "#f50e07", "#f95228", "#fb9449", "#98ac3b", "#118408"];
+        var couleurs_cas_12_couleurs = [
+            "#3c0000",
+            "#4c0000",
+            "#6a0000",
+            "#840000",
+            "#a00000",
+            "#c40001",
+            "#d50100",
+            "#e20001",
+            "#f50e07",
+            "#f95228",
+            "#fb9449",
+            "#98ac3b",
+            "#118408"];
 
 
         var valeurs_evolution = [">", "40", "30", "20", "10", "5", "0", "-5", "-10", "-20", "-30", "-40", "-50"];
@@ -64,7 +87,7 @@ jQuery(document).ready(function ($) {
                 fetchOtherData();
             });
 
-        function fetchOtherData(){
+        function fetchOtherData() {
             fetch('https://raw.githubusercontent.com/rozierguillaume/covid-19/master/data/france/stats/incidence_departements.json')
                 .then(response => {
                     if (!response.ok) {
@@ -217,9 +240,9 @@ jQuery(document).ready(function ($) {
                 numeroDepartement = $('#listeDepartements option[value="' + departement + '"]').data("num");
                 // console.log(numeroDepartement);
                 //Récupération des données du département.
-                if(vaccination==true){
+                if (vaccination == true) {
                     donneesDepartement = donneesDepartementsVaccination[numeroDepartement];
-                }else{
+                } else {
                     donneesDepartement = donneesDepartements[departement];
                 }
                 // console.log(donneesDepartement);
@@ -248,7 +271,7 @@ jQuery(document).ready(function ($) {
                     afficherDepartement(nomDepartement, numeroDepartement);
                     $('html,body').animate({scrollTop: $('#donneesDepartements').offset().top - 80}, 2000);
                 }
-            } else if($("#numeroDepartementSearched").length > 0){
+            } else if ($("#numeroDepartementSearched").length > 0) {
                 numeroDepartement = $("#numeroDepartementSearched").text();
                 nomDepartement = $("#listeDepartements option[data-num='" + numeroDepartement + "']").val();
                 if (numeroDepartement) {

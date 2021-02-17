@@ -1,0 +1,121 @@
+---
+layout: page
+js:
+ - js/index_gauges.js
+---
+{% assign dep = site.data.cases.incidence_departements.donnees_departements[page.dep_name] %}
+{% assign incidence = dep.incidence_cas %}
+{% assign incidence_evol = dep.incidence_evol %}
+{% assign positivite = dep.taux_positivite %}
+{% assign saturation_rea = dep.saturation_rea %}
+
+{% assign vacdep = site.data.vaccins.vacsi-dep[page.num_dep] %}
+{% assign vacprop = vacdep.n_dose1_cumsum_pop %}
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-12 mb-3">
+        <div class="card
+                    {% if incidence < 10 %}
+                    border-left-success
+                    {% elsif incidence >= 10 and incidence < 50 %}
+                    border-left-warning
+                    {% elsif incidence >= 50 %}
+                    border-left-danger
+                    {% endif %}
+                    ">
+            <div class="card-header text-center font-weight-bold">
+                Incidence
+            </div>
+            <div class="card-body">
+                <div id="gauge_incidence" data-title="Incidence" data-value="{{site.data.cases.last.national.incidence}}" data-symbol=
+                    {% if incidence_evol > 0 %}
+                    " ↗"
+                    {% elsif incidence_evol == 0 %}
+                    " ="
+                    {% else %}
+                    " ↘"
+                    {% endif %}
+                    ></div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Nombre de cas par semaine pour 100k habitants. Le seuil d'alerte est 50.</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-3">
+        <div class="card
+                {% if positivite < 5 %}
+                border-left-success
+                {% elsif positivite >= 5 and positivite < 10 %}
+                border-left-warning
+                {% elsif positivite >= 10  %}
+                border-left-danger
+                {% endif %}
+                    ">
+            <div class="card-header text-center font-weight-bold">
+                Taux de positivité
+            </div>
+            <div class="card-body">
+                <div id="gauge_positivite" data-value="{{positivite}}" data-symbol="%"></div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Proportion des tests qui sont positifs parmi l'ensemble des tests.</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-3">
+        <div class="card
+                    {% if saturation_rea < 30 %}
+                    border-left-success
+                    {% elsif saturation_rea >= 30 and saturation_rea < 60 %}
+                    border-left-warning
+                    {% elsif saturation_rea >= 60  %}
+                    border-left-danger
+                    {% endif %}
+                    ">
+            <div class="card-header text-center font-weight-bold">
+                Tension hospitalière
+            </div>
+            <div class="card-body">
+                <div id="gauge_tension" data-value="{{saturation_rea}}" data-symbol="%"></div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Nombre de lits de réanimation occupés par les patients Covid19 .</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-3">
+        <div class="card
+                    {% if vacprop < 30 %}
+                    border-left-danger
+                    {% elsif vacprop >= 30 and vacprop < 60 %}
+                    border-left-warning
+                    {% elsif vacprop >= 60  %}
+                    border-left-success
+                    {% endif %}
+                    ">
+            <div class="card-header text-center font-weight-bold">
+                Population vaccinée
+            </div>
+            <div class="card-body">
+                <div id="gauge_vacprop" data-value="{{vacprop}}" data-symbol="%"></div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Proportion de la population ayant reçu au moins une dose.</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-12 mb-3">
+        <a href="https://raw.githubusercontent.com/rozierguillaume/covid-19/master/images/charts/france/departements_dashboards/cas_journ_{{page.dep_name}}.jpeg"
+           target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/rozierguillaume/covid-19/master/images/charts/france/departements_dashboards/cas_journ_{{page.dep_name}}.jpeg"
+                 width="100%" style="max-width: 1000px;">
+        </a>
+    </div>
+    <div class="col-md-6">
+        <a href="https://raw.githubusercontent.com/rozierguillaume/covid-19/master/images/charts/france/departements_dashboards/hosp_journ_{{page.dep_name}}.jpeg"
+           target="_blank" rel="noopener noreferrer">
+            <img src="https://raw.githubusercontent.com/rozierguillaume/covid-19/master/images/charts/france/departements_dashboards/hosp_journ_{{page.dep_name}}.jpeg"
+                 width="100%" style="max-width: 1000px;">
+        </a>
+    </div>
+</div>

@@ -33,6 +33,14 @@ twitter:
  username: CovidTracker_fr
  card: summary
 
+page_gen-dirs: true
+page_gen:
+ - data: 'departements'
+   template: 'departement'
+   dir: 'syntheses/departement'
+   name: 'dep_name'
+   index_files: false
+
 plugins:
  - jekyll-seo-tag
 

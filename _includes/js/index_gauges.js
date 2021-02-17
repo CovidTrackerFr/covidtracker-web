@@ -156,3 +156,42 @@ var g = new JustGage({
         ]
     }
 });
+
+var g = new JustGage({
+    id: "gauge_vacprop",
+    value: $("#gauge_vacprop").data('value'),
+    min: 0,
+    max: 100,
+    symbol: $("#gauge_vacprop").data('symbol'),
+    pointer: true,
+    pointerOptions: {
+        toplength: -15,
+        bottomlength: 10,
+        bottomwidth: 12,
+        color: '#8e8e93',
+        stroke: '#ffffff',
+        stroke_width: 3,
+        stroke_linecap: 'round'
+    },
+    title: "Population vaccinée",
+    customSectors: {
+        percents: false,
+        ranges: [
+            {
+                color: "#a9d70b",
+                lo: 30,
+                hi: 60
+            },
+            {
+                color: "#f9c802",
+                lo: 30,
+                hi: 60
+            },
+            {
+                color: "#ff0000",
+                lo: 0,
+                hi: 30
+            },
+        ]
+    }
+});
