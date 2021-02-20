@@ -63,13 +63,18 @@
     /* ******************************* */
     $(document).on('click', '.card.zoomable .card-header', function(e) {
         let thiscard =  $(this).closest('.card.zoomable');
+        let width = thiscard[0].clientWidth;
+        let height = thiscard[0].clientHeight;
+        let scale = 1/Math.max(thiscard[0].clientWidth/window.innerWidth,thiscard[0].clientHeight/window.innerHeight);
         thiscard.toggleClass('zoomed');
         if(thiscard.hasClass('zoomed')) {
-            let scale = 1/Math.max(thiscard[0].clientWidth/window.innerWidth,thiscard[0].clientHeight/window.innerHeight);
-            let pos = (scale-1)*95;
+            thiscard.css('height', height);
+            thiscard.css('width', width);
             thiscard.css('transform', 'scale('+scale+') translate(-50%, -50%)');
         } else {
             thiscard.css('transform', '');
+            thiscard.css('height', '');
+            thiscard.css('width', '');
         }
         $(this).children('i').toggleClass('fa-expand-arrows-alt fa-compress-arrows-alt');
     });
