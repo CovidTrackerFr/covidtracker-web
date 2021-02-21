@@ -1,0 +1,3 @@
+[submodule "covid-data"]
+	path = covid-data
+	url = https://github.com/CovidTrackerFR/covid-data.git

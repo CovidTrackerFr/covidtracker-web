@@ -2,17 +2,18 @@
 layout: page
 js:
  - js/index_gauges.js
+
 ---
-{% assign dep = site.data.cases.incidence_departements.donnees_departements[page.dep_name] %}
+{% assign dep = site.data.json.cases.incidence_departements.donnees_departements[page.dep_name] %}
 {% assign incidence = dep.incidence_cas %}
 {% assign incidence_evol = dep.incidence_evol %}
 {% assign positivite = dep.taux_positivite %}
 {% assign saturation_rea = dep.saturation_rea %}
 
-{% assign vacdep = site.data.vaccins.vacsi-dep[page.num_dep] %}
+{% assign vacdep = site.data.json.vaccins.vacsi-dep[page.num_dep] %}
 {% assign vacprop = vacdep.n_dose1_cumsum_pop %}
 <div class="row">
-    <div class="col-lg-3 col-md-6 col-12 mb-3">
+    <div class="col-lg-3 col-md-6 col-12 mb-3" id="indicateurs">
         <div class="card
                     {% if incidence < 10 %}
                     border-left-success
@@ -41,7 +42,7 @@ js:
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-12 mb-3">
+    <div class="col-lg-3 col-md-6 col-12 mb-3" id="overall">
         <div class="card
                 {% if positivite < 5 %}
                 border-left-success
@@ -105,17 +106,48 @@ js:
         </div>
     </div>
     <div class="col-lg-6 col-12 mb-3">
-        <a href="https://raw.githubusercontent.com/rozierguillaume/covid-19/master/images/charts/france/departements_dashboards/cas_journ_{{page.dep_name}}.jpeg"
-           target="_blank" rel="noopener noreferrer">
-            <img src="https://raw.githubusercontent.com/rozierguillaume/covid-19/master/images/charts/france/departements_dashboards/cas_journ_{{page.dep_name}}.jpeg"
-                 width="100%" style="max-width: 1000px;">
-        </a>
+        <div class="card zoomable">
+            <div class="card-header"></div>
+            <div class="card-body">
+                {% capture dep_cas_journ %} assets/charts-img/departements_dashboards/cas_journ_{{page.dep_name}}.jpeg {% endcapture %}
+                {% responsive_image_block %}
+                path: {{dep_cas_journ}}
+                {% endresponsive_image_block %}
+            </div>
+        </div>
+
     </div>
-    <div class="col-md-6">
-        <a href="https://raw.githubusercontent.com/rozierguillaume/covid-19/master/images/charts/france/departements_dashboards/hosp_journ_{{page.dep_name}}.jpeg"
-           target="_blank" rel="noopener noreferrer">
-            <img src="https://raw.githubusercontent.com/rozierguillaume/covid-19/master/images/charts/france/departements_dashboards/hosp_journ_{{page.dep_name}}.jpeg"
-                 width="100%" style="max-width: 1000px;">
-        </a>
+    <div class="col-lg-6 col-12 mb-3">
+        <div class="card zoomable">
+            <div class="card-header"></div>
+            <div class="card-body">
+                {% capture dep_hosp_journ %} assets/charts-img/departements_dashboards/hosp_journ_{{page.dep_name}}.jpeg {% endcapture %}
+                {% responsive_image_block %}
+                path: {{dep_hosp_journ}}
+                {% endresponsive_image_block %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-12 mb-3">
+        <div class="card zoomable">
+            <div class="card-header"></div>
+            <div class="card-body">
+                {% capture dep_rea_journ %} assets/charts-img/departements_dashboards/rea_journ_{{page.dep_name}}.jpeg {% endcapture %}
+                {% responsive_image_block %}
+                path: {{dep_rea_journ}}
+                {% endresponsive_image_block %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-12 mb-3">
+        <div class="card zoomable">
+            <div class="card-header"></div>
+            <div class="card-body">
+                {% capture dep_dc_journ %} assets/charts-img/departements_dashboards/dc_journ_{{page.dep_name}}.jpeg {% endcapture %}
+                {% responsive_image_block %}
+                path: {{dep_dc_journ}}
+                {% endresponsive_image_block %}
+            </div>
+        </div>
     </div>
 </div>

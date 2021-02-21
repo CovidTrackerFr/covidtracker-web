@@ -5,23 +5,27 @@
     - name: News
       icon: fa-newspaper
       link: /news
-- title: Vaccins
+- title: Synthèses
   links:
-    - name: Vaccintracker
+    - name: Situation en France
+      link: /syntheses/france
+    - name: Vaccins
       icon: fa-chart-line
       link: /syntheses/vaccintracker
+- title: En détail
+  links:
+    - name: Par département
+      link: "#departements"
+      icon: fa-tachometer-alt
+      id: departements
+    - name: Par région
+      link: "#regions"
+      icon: fa-chart-line
+- title: Outils
+  links:
     - name: VaccinPlanner
       icon: fa-calendar-check
       link: /outils/vaccinplanner
-- title: Cartes
-  links:
-    - name: Départements
-      sublinks:
-        - name: Vaccins
-          link: /cartes/vaccinsdepartements
-        - name: Hospitalisations
-          link: /cartes/hospdepartements
-    - name: Région
-      sublinks:
-        - name: Vaccins
-          link: /cartes/vaccinsregions
+    - name: CoviRisque
+      link: /outils/covirisque
+

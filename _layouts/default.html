@@ -27,11 +27,11 @@
   <div id="dashboard_nav" class="fixed-top">
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-      <li><a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{"index.html" | prepend: site.baseurl }}">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+      <li><a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{"/index.html" | prepend: site.baseurl }}">
+        <div class="sidebar-brand-icon">
+          <img src="{{'/assets/img/covidtracker_logo_transp_white.png' | prepend: site.baseurl}}" style="max-width:2rem">
         </div>
-        <div class="sidebar-brand-text mx-3">{{site.title}}</sup></div>
+        <div class="sidebar-brand-text ml-1 mr-3">{{site.title}}</sup></div>
       </a></li>
 
       {% for item in site.data.navbar %}
@@ -43,12 +43,12 @@
         {% for link in item.links %}
           {% if link.sublinks %}
             <li class="nav-item">
-              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#idnav{{ link.name }}"
-                 aria-expanded="true" aria-controls="idnav{{ link.name }}">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#idnav{{ link.name |  remove: " " }}"
+                 aria-expanded="true" aria-controls="idnav{{ link.name | remove: " "}}">
                 <i class="fas fa-fw fa-folder"></i>
                 <span>{{ link.name }}</span>
               </a>
-              <div id="idnav{{ link.name }}" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+              <div id="idnav{{ link.name | remove: " "}}" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                   {% for sublink in link.sublinks %}
                     <a class="collapse-item" href="{{ sublink.link | prepend: site.baseurl }}">{{ sublink.name}}</a>
@@ -58,7 +58,10 @@
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ link.link | prepend: site.baseurl }}">
+              {% if link.id == "departements" %}
+              <!-- specific treatment for deps -->
+              <a class="nav-link" href="{{ link.link | prepend: site.baseurl }}" id="{{link.id}}"
+                 data-toggle="popover" data-content="test" data-container="body">
                 <i class="fas fa-fw
                                   {% if link.icon %}
                                       {{ link.icon }}
@@ -67,6 +70,17 @@
                                   {% endif %}
                                   "></i>
                 <span>{{ link.name }}</span></a>
+              {% else %}
+              <a class="nav-link" href="{{ link.link | prepend: site.baseurl }}" id="{{link.id}}">
+                <i class="fas fa-fw
+                                  {% if link.icon %}
+                                      {{ link.icon }}
+                                  {% else %}
+                                      fa-chart-area
+                                  {% endif %}
+                                  "></i>
+                <span>{{ link.name }}</span></a>
+              {% endif %}
             </li>
           {% endif %}
         {% endfor %}
@@ -95,7 +109,7 @@
             {% for item in site.data.navbar %}
             {% if item.title %}
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropDown{{item.title}}" role="button" data-toggle="dropdown">{{item.title}}</a>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropDown{{item.title | url_encode }}" role="button" data-toggle="dropdown">{{item.title}}</a>
               <div class="dropdown-menu">
                 {% for link in item.links %}
                 {% if link.sublinks %}

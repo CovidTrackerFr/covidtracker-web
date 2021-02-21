@@ -41,6 +41,20 @@ page_gen:
    name: 'dep_name'
    index_files: false
 
+responsive_image:
+  template: _includes/responsive-image.html
+  sizes:
+    - width: 480
+      quality: 80
+    - width: 800
+      quality: 90
+    - width: 1400
+      quality: 90
+    - width: 1900
+      quality: 90
+  strip: true
+  save_to_source: false
+
 plugins:
  - jekyll-seo-tag
 
