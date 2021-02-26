@@ -20,11 +20,28 @@
         </div><p></p>
     </div>
     <div id="blocCarteDepartement"  class="col-md-6 offset-md-3">
-        {% include carte_departement.html type="n_dose1_cumsum_pop" %}
+
     </div>
     <div id="blocCarteRegion" class="col-md-6 offset-md-3">
         <!-- <?php include(__DIR__ . '/carteRegion.php') ?> -->
     </div>
 </div>
 
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        let data = {{ site.data.json.cases.incidence_departements.donnees_departements | jsonify }};
+        let departements = {{ site.data.departements | jsonify }};
+        //add num dep to data as it is the key used in svg
+        for (let key in data) {
+            numdep = departements.filter(function(el){
+                return el.dep_name.toLowerCase() == key.toLowerCase();
+            });
+            data[key].num_dep = numdep[0].num_dep;
+        }
+        $('#blocCarteDepartement').datamap({
+            svgPath: "{{ '/assets/svg/departements.svg' | prepend: site.baseurl }}",
+            data: data,
+            svgId: 'data-num'
+        });
+    });
+</script>

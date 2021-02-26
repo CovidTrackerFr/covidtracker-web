@@ -2,9 +2,11 @@
 layout: default
 title: "Covidtracker"
 subtitle: "Statistiques et visualisations de données Covid19"
+headjs:
+  - assets/vendor/jquery-ui.widget-factory.min.js
+  - assets/js/jquery-map.js
 js:
   - js/index_gauges.js
-  - js/carte_departement.js
 css:
   - assets/css/vaccins_proportion.css
   - assets/css/carte_departement.css
@@ -142,8 +144,8 @@ css:
                         <div class="card-header text-center font-weight-bold">
                             Carte de l'incidence
                         </div>
-                        <div class="card-body">
-                            {% include carte_departement.html %}
+                        <div class="card-body" id="datamap">
+
                         </div>
                     </div>
                 </div>
@@ -172,3 +174,22 @@ css:
 
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        let data = {{ site.data.json.cases.incidence_departements.donnees_departements | jsonify }};
+        let departements = {{ site.data.departements | jsonify }};
+        //add num dep to data as it is the key used in svg
+        for (let key in data) {
+            numdep = departements.filter(function(el){
+                return el.dep_name.toLowerCase() == key.toLowerCase();
+            });
+            data[key].num_dep = numdep[0].num_dep;
+        }
+        $('#datamap').datamap({
+            svgPath: "{{ '/assets/svg/departements.svg' | prepend: site.baseurl }}",
+            data: data,
+            svgId: "data-num"
+        });
+    });
+</script>

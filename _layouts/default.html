@@ -16,6 +16,21 @@
   {% for css in page.css %}
   <link rel="stylesheet" href="{{ css | prepend: site.baseurl }}">
   {% endfor %}
+  <script src="{{'/assets/vendor/jquery.min.js' | prepend: site.baseurl}}"></script>
+  <script src="{{'/assets/vendor/popper.min.js' | prepend: site.baseurl}}"></script>
+  <script src="{{'/assets/vendor/bootstrap.bundle.min.js' | prepend: site.baseurl}}"></script>
+  <script src="{{'/assets/vendor/jquery.easing.min.js' | prepend: site.baseurl }}"></script>
+  <script src="{{'/assets/vendor/moment-with-locales.min.js' | prepend: site.baseurl}}"></script>
+  <script src="{{'/assets/vendor/Chart.bundle.js' | prepend: site.baseurl}}"></script>
+  <script src="{{'/assets/vendor/select2.min.js' | prepend: site.baseurl}}"></script>
+  <script src="{{'/assets/vendor/raphael.min.js' | prepend: site.baseurl}}"></script>
+  <script src="{{'/assets/vendor/justgage.min.js' | prepend: site.baseurl}}"></script>
+
+  <!-- vendor js -->
+  {% for js in layout.headjs %}
+  <script src="{{ js | prepend: site.baseur }}"></script>
+  {% endfor %}
+
   {% for js in page.headjs %}
   <script src="{{ js | prepend: site.baseurl }}"></script>
   {% endfor %}
@@ -25,7 +40,7 @@
 
 
   <div id="dashboard_nav" class="fixed-top">
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <li><a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{"/index.html" | prepend: site.baseurl }}">
         <div class="sidebar-brand-icon">
@@ -147,23 +162,18 @@
   <i class="fas fa-angle-up"></i>
 </a>
 
-<script src="{{'/assets/vendor/jquery.min.js' | prepend: site.baseurl}}"></script>
-<script src="{{'/assets/vendor/popper.min.js' | prepend: site.baseurl}}"></script>
-<script src="{{'/assets/vendor/bootstrap.bundle.min.js' | prepend: site.baseurl}}"></script>
-<script src="{{'/assets/vendor/jquery.easing.min.js' | prepend: site.baseurl }}"></script>
-<script src="{{'/assets/vendor/moment-with-locales.min.js' | prepend: site.baseurl}}"></script>
-<script src="{{'/assets/vendor/Chart.bundle.js' | prepend: site.baseurl}}"></script>
-<script src="{{'/assets/vendor/select2.min.js' | prepend: site.baseurl}}"></script>
-<script src="{{'/assets/vendor/raphael.min.js' | prepend: site.baseurl}}"></script>
-<script src="{{'/assets/vendor/justgage.min.js' | prepend: site.baseurl}}"></script>
 <script type="text/javascript">
   {% include js/dashboard.js %}
 </script>
+
+
+<!-- include js -->
 {% for js in layout.js %}
 <script type="text/javascript">
   {% include {{ js }} %}
 </script>
 {% endfor %}
+
 {% for js in page.js %}
 <script type="text/javascript">
   {% include {{ js }} %}

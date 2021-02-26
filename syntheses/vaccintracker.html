@@ -3,10 +3,12 @@ layout: page
 img: assets/img/vaccine-1920.jpg
 title: VaccinTracker
 subtitle: Combien de français ont été vaccinés contre la Covid19 ?
+headjs:
+  - /assets/vendor/jquery-ui.widget-factory.min.js
+  - /assets/js/jquery-map.js
 js:
   - js/covidtracker_utils.js
   - js/vaccintracker.js
-  - js/carte_departement.js
 css:
   - /assets/css/vaccins_proportion.css
   - /assets/css/timeline.css
@@ -44,6 +46,14 @@ navbar:
 
     <div class="col-lg-6 col-md-12 mt-3">
         {% include_relative elements/vaccins/evolution.html %}
+    </div>
+
+    <div class="col-lg-6 col-md-12 mt-3">
+        {% include_relative elements/vaccins/par_age.html %}
+    </div>
+
+    <div class="col-lg-6 col-md12 mt-3">
+        {% include_relative elements/vaccins/par_type.html %}
     </div>
 
     <div class="col-md-12 mt-3">
