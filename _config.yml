@@ -8,6 +8,8 @@ defaults:
    values:
      image: true
 lang: fr
+locale: fr_FR
+logo: "/assets/img/covidtracker_logo_transp.png"
 sass:
  load_paths:
   - _sass
@@ -33,6 +35,11 @@ twitter:
  username: CovidTracker_fr
  card: summary
 
+social:
+  name: CovidTracker
+  links:
+    - https://twitter.com/Covidtracker_fr
+
 page_gen-dirs: true
 page_gen:
  - data: 'departements'
@@ -54,8 +61,5 @@ responsive_image:
       quality: 90
   strip: true
   save_to_source: false
-
-plugins:
- - jekyll-seo-tag
 
 
