@@ -1,0 +1,37 @@
+---
+layout: page
+title: "L'équipe CovidTracker"
+subtitle: "CovidTracker est une site conçu et maintenu par des bénévoles."
+permalink: /contributeurs
+---
+<div class="container py-5">
+    <div class="row text-center">
+{% for author in site.data.authors %}
+        <div class="col-xl-3 col-sm-6 mb-5">
+            <div class="bg-white rounded shadow-sm py-5 px-4"><img src=
+            {% if author.github %}
+            "https://github.com/{{author.github}}.png"
+            {% else %}
+            {{ "/assets/img/avatar1.png" | prepend: site.baseurl }}
+            {% endif %}
+             alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                <h5 class="mb-0">{{author.name}}</h5><span class="small text-uppercase text-muted">{{author.role}}</span>
+                <ul class="social mb-0 list-inline mt-3">
+                    {% if author.facebook %}
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a></li>
+                    {% endif %}
+                    {% if author.twitter %}
+                    <li class="list-inline-item"><a href="https://twitter.com/{{author.twitter}}" class="social-link"><i class="fab fa-twitter"></i></a></li>
+                    {% endif %}
+                    {% if author.github %}
+                    <li class="list-inline-item"><a href="https://github.com/{{author.github}}" class="social-link"><i class="fab fa-github"></i></a></li>
+                    {% endif %}
+                    {% if author.linkedin %}
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-linkedin"></i></a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+{% endfor %}
+    </div>
+</div>

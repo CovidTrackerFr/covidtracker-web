@@ -14,5 +14,6 @@ group :jekyll_plugins do
     gem 'jekyll-spaceship'
     gem 'jekyll-datapage-generator'
     gem 'jekyll-responsive-image'
+    gem 'jekyll-analytics'
 end
 
