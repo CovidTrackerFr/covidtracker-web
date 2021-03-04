@@ -48,6 +48,18 @@ page_gen:
    name: 'dep_name'
    index_files: false
 
+jekyll_analytics:
+  GoogleAnalytics:
+    id: UA-163777724-1
+    anonymizeIp: true
+
+jekyll-spaceship:
+  processors:
+    - table-processor
+    - polyfill-processor
+    - media-processor
+    - emoji-processor
+
 responsive_image:
   template: _includes/responsive-image.html
   sizes:
