@@ -26,7 +26,7 @@ jobs:
         run: |
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
-      - run: bundle exec jekyll b --trace
+      - run: JEKYLL_ENV=production bundle exec jekyll b --trace
       - uses: burnett01/rsync-deployments@4.1
         with:
           switches: -r --exclude='/files'
