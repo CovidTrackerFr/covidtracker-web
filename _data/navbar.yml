@@ -5,6 +5,9 @@
     - name: News
       icon: fa-newspaper
       link: /news
+    - name: Contributeurs
+      link: /contributeurs
+      icon: fa-users
 - title: Synthèses
   links:
     - name: Situation en France
@@ -28,4 +31,3 @@
       link: /outils/vaccinplanner
     - name: CoviRisque
       link: /outils/covirisque
-

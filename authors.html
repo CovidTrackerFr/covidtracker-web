@@ -17,17 +17,20 @@ permalink: /contributeurs
              alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
                 <h5 class="mb-0">{{author.name}}</h5><span class="small text-uppercase text-muted">{{author.role}}</span>
                 <ul class="social mb-0 list-inline mt-3">
-                    {% if author.facebook %}
-                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a></li>
-                    {% endif %}
                     {% if author.twitter %}
-                    <li class="list-inline-item"><a href="https://twitter.com/{{author.twitter}}" class="social-link"><i class="fab fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="https://twitter.com/{{author.twitter}}" class="social-link" target="_blank"><i class="fab fa-twitter"></i></a></li>
                     {% endif %}
                     {% if author.github %}
-                    <li class="list-inline-item"><a href="https://github.com/{{author.github}}" class="social-link"><i class="fab fa-github"></i></a></li>
+                    <li class="list-inline-item"><a href="https://github.com/{{author.github}}" class="social-link" target="_blank"><i class="fab fa-github"></i></a></li>
                     {% endif %}
                     {% if author.linkedin %}
-                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fab fa-linkedin"></i></a></li>
+                    <li class="list-inline-item"><a href="https://linkedin.com/in/{{author.linkedin}}" class="social-link" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                    {% endif %}
+                    {% if author.mastodon %}
+                    <li class="list-inline-item"><a href="{{author.mastodon}}" class="social-link" target="_blank"><i class="fab fa-mastodon"></i></a></li>
+                    {% endif %}
+                    {% if author.website %}
+                    <li class="list-inline-item"><a href="{{author.website}}" class="social-link" target="_blank"><i class="fas fa-link"></i></a></li>
                     {% endif %}
                 </ul>
             </div>

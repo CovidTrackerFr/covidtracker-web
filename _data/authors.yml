@@ -1,10 +1,20 @@
+#Paramètres acceptés :
+# name: Nom complet
+# twitter : Twitter username avec @
+# github : Github username
+# mastodon : Lien complet vers le profil
+# linkedin : Linkedin Username
+# website : Lien vers website perso
+
 - name: "Guillaume Rozier"
   twitter: "@GuillaumeRozier"
   github: "rozierguillaume"
+  linkedin: "guillaume-rozier"
   role: "Fondateur"
 - name: "Nicolas Furno"
   role: "Administrateur système"
   github: "nicolinuxfr"
+  linkedin: "nicolasfurno"
 - name: "Elias Orphelin"
   role: "Contributeur"
   twitter: "@eorphelin"
@@ -15,6 +25,7 @@
   role: "Rédacteur de la newsletter, communication réseaux sociaux"
 - name: "Philippe Brouard"
   role: "Rédacteur d'articles, modélise l'évolution de l'épidémie"
+  twitter: "@pbrouard"
 - name: "Aymerik Diebold"
   role: "Développeur"
   github: "Aymerik"
@@ -23,7 +34,9 @@
   github: "DonatienD"
 - name: "Steven Syp"
   role: "Développeur mobile"
+  website: "https://stevensyp.fr"
 - name: "Bruno Spyckerelle"
   twitter: "@BrunoSpy"
   github: "BrunoSpy"
+  mastodon: "https://mastodon.partipirate.org/@brunospy"
   role: "Expert IHM"
