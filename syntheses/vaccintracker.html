@@ -29,6 +29,17 @@ navbar:
   - name: Situation mondiale
     id: vaccins_monde
 ---
+
+<script type="text/javascript">
+    //initialisation variables globales pour les différents blocs
+    //à découper plus finement par la suite
+    var data = {{ site.data.json.vaccins.vacsi-fra | jsonify }};
+    var data_france = {{ site.data.json.vaccins.vacsi-fra | jsonify }};
+    var vaccines_2doses = {{ site.data.json.vaccins.vacsi-fra-2doses | jsonify }};
+    var sommes_doses_rolling = {{ site.data.json.vaccins.sommes-doses-rolling | jsonify }};
+    var livraisons = {{ site.data.json.vaccins.flux-tot-nat | jsonify }};
+</script>
+
 <div class="row">
     <p>Quelle proportion des Français a été vaccinée ? Combien faut-il encore vacciner de personnes avant
         d'atteindre l'immunité collective ? Quels sont les différents types de vaccins proposés ? Ce tracker permet de

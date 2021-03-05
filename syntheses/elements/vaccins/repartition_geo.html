@@ -9,39 +9,69 @@
 </div>
 <br>
 <div class="row">
-    <div id="choixCarte" class="col-md-6 offset-md-3 text-center">
-        <div class="btn-group" role="group" aria-label="Choix carte">
-            <button id="choixCarteDepartement" type="button" class="btn btn-secondary active">
-                Par département
-            </button>
-            <button id="choixCarteRegion" type="button" class="btn btn-secondary">
-                Par région
-            </button>
-        </div><p></p>
+    <div class="col-lg-6 col-md-12 mt-3">
+        <div class="card zoomable">
+            <div class="card-header">Par départements</div>
+            <div class="card-body" id="blocCarteDepartement"></div>
+        </div>
     </div>
-    <div id="blocCarteDepartement"  class="col-md-6 offset-md-3">
-
+    <div class="col-lg-6 col-md-12 mt-3">
+        <div class="card zoomable">
+            <div class="card-header">Par régions</div>
+            <div class="card-body" id="blocCarteDepartement"></div>
+        </div>
     </div>
-    <div id="blocCarteRegion" class="col-md-6 offset-md-3">
-        <!-- <?php include(__DIR__ . '/carteRegion.php') ?> -->
+    <div class="col-lg-6 col-md-12 mt-3">
+        <div class="card zoomable">
+            <div class="card-header">Vaccinations en EHPAD par départements</div>
+            <div class="card-body" id="blocCarteEHPADDepartement"></div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 mt-3">
+        <div class="card zoomable">
+            <div class="card-header">Vaccinations en EHPAD par régions</div>
+            <div class="card-body" id="blocCarteEHPADRegions"></div>
+        </div>
     </div>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function(){
-        let data = {{ site.data.json.cases.incidence_departements.donnees_departements | jsonify }};
-        let departements = {{ site.data.departements | jsonify }};
-        //add num dep to data as it is the key used in svg
-        for (let key in data) {
-            numdep = departements.filter(function(el){
-                return el.dep_name.toLowerCase() == key.toLowerCase();
-            });
-            data[key].num_dep = numdep[0].num_dep;
+        let tableauValeursDepartements = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5]
+        let tableauCouleursDepartements= [
+            "#cfdde6",
+            "#b8d4e6",
+            "#a1cbe6",
+            "#8ac2e6",
+            "#73bae6",
+            "#5cb1e6",
+            "#45a8e6",
+            "#2e9fe6",
+            "#1796e6",
+            "#0076bf"
+        ];
+
+        let data = {{ site.data.json.vaccins.vacsi-dep | jsonify }};
+        delete data.departements; //remove first entry
+        //add dep num in value
+        for (var key in data) {
+            data[key].num_dep = key;
         }
         $('#blocCarteDepartement').datamap({
             svgPath: "{{ '/assets/svg/departements.svg' | prepend: site.baseurl }}",
             data: data,
-            svgId: 'data-num'
+            svgId: 'data-num',
+            values: tableauValeursDepartements,
+            colors: tableauCouleursDepartements,
+            valueKey: 'n_dose1_cumsum_pop',
+            legendDirection: "ascending",
+            iterationKey: 'num_dep'
         });
+
+        let valeursRegions = tableauValeursDepartements;
+        let couleursRegions = tableauCouleursDepartements;
+        let datareg = {{ site.data.json.vaccins.vacsi-reg | jsonify }};
+        
+
     });
 </script>

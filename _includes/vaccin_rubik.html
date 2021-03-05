@@ -13,10 +13,18 @@
 </div>
 
 <script type="text/javascript">
+    let vacsifra = {{ site.data.json.vaccins.vacsi-fra | jsonify }};
+    let n = vacsifra.n_dose1_cumsum.length;
+    let dejaVaccines1dose = vacsifra.n_dose1_cumsum[n-1]*100/67000000;
+
+    let vacsifra2 = {{ site.data.json.vaccins.vacsi-fra-2doses | jsonify }};
+    let N = vacsifra2.n_dose2_cumsum.length;
+    let dejaVaccines2doses = vacsifra2.n_dose2_cumsum[N-1]*100/67000000;
+
     tableVaccin(document.getElementById("tableauVaccin"),
         0,
-        {{ site.data.vaccins.vaccins["proportion_vaccinnee"] }},
-    {{ site.data.vaccins.vaccins["proportion_vaccinnee_2doses"]}}
+        dejaVaccines1dose,
+        dejaVaccines2doses
     );
 </script>
 

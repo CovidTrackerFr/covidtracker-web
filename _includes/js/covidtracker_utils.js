@@ -10,6 +10,9 @@ function formaterDate (date) {
     });
 }
 
+function formateDate(date) {
+    return date.slice(8) + "/" + date.slice(5, 7)
+}
 
 // ref: http://stackoverflow.com/a/1293163/2343
 // This will parse a delimited string into an array of

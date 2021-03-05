@@ -25,6 +25,7 @@ exclude:
  - yarn.lock
  - deploy_npm.sh
  - .idea
+ - covid-data
 
 collections:
  posts:

@@ -46,7 +46,10 @@
                 throw 'Values and colors arrays have not the same size.';
             }
             self.element.load(self.options.svgPath, function(e){
-                self.element.find('svg').css({'padding-right': '30px'}).attr('width', '').attr('height', '');
+                let svg = self.element.find('svg');
+                svg[0].removeAttribute('width');
+                svg[0].removeAttribute('height');
+                svg.css({'padding-right': '30px'})
                 self._colorize();
                 self._buildLegend();
             });
@@ -88,7 +91,7 @@
             let self = this;
             if(this.legendContainer == null) {
                 let randId = Math.floor(Math.random() * Math.floor(1000));
-                this.legendContainer = $('<div id="legend'+randId+'" class="mapLegend" style="margin-bottom:-80px; float:right;"></div>');
+                this.legendContainer = $('<div id="legend'+randId+'" class="mapLegend" style="float:right;"></div>');
                 this.element.prepend(this.legendContainer);
             }
             this.legendContainer.empty().append('<table><tbody></tbody></table>');
@@ -103,9 +106,10 @@
                 }
                 tbody.append('<tr><td style="text-align: center; background-color: '+self.options.colors[idx]+'; color: white; font-size: 50%; padding: 5px;">'+self.options.values[idx]+'</td></tr>')
             });
+            this.legendContainer.css('margin-bottom', '-'+this.legendContainer.offsetHeight+'px');
         },
         _getColor: function(value){
-            if (this.options.direction == "ascending") {
+            if (this.options.legendDirection == "ascending") {
                 for (let i = this.options.colors.length -1; i >= 0; i--){
                     if (i == 0) {
                         return this.options.colors[i];
@@ -125,10 +129,17 @@
         },
         _colorize: function(){
             let self = this;
+            //console.log('colorize');
+            //console.log(self.options.data);
             $.each(self.options.data, function(key, value){
-                let selector = 'path[data-num="'+value[self.options.iterationKey]+'"]';
+                //console.log(value);
+                let selector = 'path['+self.options.svgId+'="'+value[self.options.iterationKey]+'"]';
                 let elt = self.element.find(selector);
+                //console.log(elt);
+                //console.log(self._getColor(value[self.options.valueKey]));
                 elt.css("fill", self._getColor(value[self.options.valueKey]));
+                //console.log('value '+value[self.options.valueKey]);
+                elt.data(self.options.valueKey, value[self.options.valueKey])
             });
         }
     });
