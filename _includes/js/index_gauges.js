@@ -2,10 +2,12 @@ var g = new JustGage({
     id: "gauge_incidence",
     value: $("#gauge_incidence").data('value'),
     min: 0,
-    max: 250,
+    max: 400,
+    gaugeWidthScale: 0.3,
+    valueMinFontSize: 25,
     symbol: $("#gauge_incidence").data('symbol'),
     title: $("#gauge_incidence").data('title'),
-    pointer: true,
+    pointer: false,
     pointerOptions: {
         toplength: -15,
         bottomlength: 10,
@@ -16,7 +18,7 @@ var g = new JustGage({
         stroke_linecap: 'round'
     },
     counter: true,
-    showInnerShadow: true,
+    showInnerShadow: false,
     customSectors: {
         percents: false,
         ranges: [
@@ -44,8 +46,10 @@ var g = new JustGage({
     min: 0,
     max: 15,
     decimals: 1,
-    showInnerShadow: true,
-    pointer: true,
+    showInnerShadow: false,
+    gaugeWidthScale: 0.3,
+    valueMinFontSize: 25,
+    pointer: false,
     pointerOptions: {
         toplength: -15,
         bottomlength: 10,
@@ -86,7 +90,9 @@ var g = new JustGage({
     max: 3,
     decimals: 2,
     title: "Reff",
-    pointer: true,
+    pointer: false,
+    gaugeWidthScale: 0.3,
+    valueMinFontSize: 25,
     symbol: $("#gauge_reff").data('symbol'),
     pointerOptions: {
         toplength: -15,
@@ -123,8 +129,10 @@ var g = new JustGage({
     value: $("#gauge_tension").data('value'),
     min: 0,
     max: 100,
+    gaugeWidthScale: 0.3,
+    valueMinFontSize: 25,
     symbol: $("#gauge_tension").data('symbol'),
-    pointer: true,
+    pointer: false,
     pointerOptions: {
         toplength: -15,
         bottomlength: 10,

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Covidtracker"
+title: "CovidTracker"
 subtitle: "Statistiques et visualisations de données Covid19"
 headjs:
   - assets/vendor/jquery-ui.widget-factory.min.js
@@ -16,22 +16,12 @@ css:
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="row">
                 <!-- TODO change border-left with variables -->
                 <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="card
-                    {% if site.data.cases.last.national.incidence < 10 %}
-                    border-left-success
-                    {% elsif site.data.cases.last.national.incidence >= 10 and site.data.cases.last.national.incidence < 50 %}
-                    border-left-warning
-                    {% elsif site.data.cases.last.national.incidence >= 50 %}
-                    border-left-danger
-                    {% endif %}
-                    ">
-                        <div class="card-header text-center font-weight-bold">
-                            Incidence
-                        </div>
+                    <div class="card">
+                        
                         <div class="card-body">
                             <div id="gauge_incidence" data-title="Incidence" data-value="{{site.data.cases.last.national.incidence}}" data-symbol=
                             {% if site.data.cases.last.national.incidence_tendance > 0 %}
@@ -44,23 +34,13 @@ css:
                             ></div>
                         </div>
                         <div class="card-footer">
+                            <b>Taux d'incidence</b><br>
                             <small class="text-muted">Nombre de cas par semaine pour 100k habitants. Le seuil d'alerte est 50.</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="card
-                    {% if site.data.cases.last.national.positivite < 5 %}
-                    border-left-success
-                    {% elsif site.data.cases.last.national.positivite >= 5 and site.data.cases.last.national.positivite < 10 %}
-                    border-left-warning
-                    {% elsif site.data.cases.last.national.positivite >= 10  %}
-                    border-left-danger
-                    {% endif %}
-                        ">
-                        <div class="card-header text-center font-weight-bold">
-                            Taux de positivité
-                        </div>
+                    <div class="card">
                         <div class="card-body">
                             <div id="gauge_positivite" data-value="{{site.data.cases.last.national.positivite}}" data-symbol=
                                  {% if site.data.cases.last.national.positivite_tendance > 0 %}
@@ -73,23 +53,13 @@ css:
                             ></div>
                         </div>
                         <div class="card-footer">
+                            <b>Taux de positivité</b><br>
                             <small class="text-muted">Proportion des tests qui sont positifs parmi l'ensemble des tests.</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="card
-                    {% if site.data.cases.last.national.reff < 1 %}
-                    border-left-success
-                    {% elsif site.data.cases.last.national.reff >= 1 and site.data.cases.last.national.reff < 1.5 %}
-                    border-left-warning
-                    {% elsif site.data.cases.last.national.reff >= 1.5  %}
-                    border-left-danger
-                    {% endif %}
-                    ">
-                        <div class="card-header text-center font-weight-bold">
-                            Reff
-                        </div>
+                    <div class="card">
                         <div class="card-body">
                             <div id="gauge_reff" data-value="{{site.data.cases.last.national.reff}}" data-symbol=
                                  {% if site.data.cases.last.national.reff_tendance > 0 %}
@@ -102,23 +72,13 @@ css:
                                 ></div>
                         </div>
                         <div class="card-footer">
+                            <b>R_effectif</b><br>
                             <small class="text-muted">Nombre de personnes contaminées par 1 malade.</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6 col-lg-3">
-                    <div class="card
-                    {% if site.data.hosp.last.national.saturation_rea < 30 %}
-                    border-left-success
-                    {% elsif site.data.hosp.last.national.saturation_rea >= 30 and site.data.hosp.last.national.saturation_rea < 60 %}
-                    border-left-warning
-                    {% elsif site.data.hosp.last.national.saturation_rea >= 60  %}
-                    border-left-danger
-                    {% endif %}
-                    ">
-                        <div class="card-header text-center font-weight-bold">
-                            Tension hospitalière
-                        </div>
+                    <div class="card">
                         <div class="card-body">
                             <div id="gauge_tension" data-value="{{site.data.hosp.last.national.saturation_rea}}" data-symbol=
                                  {% if site.data.hosp.last.national.saturation_rea_tendance > 0 %}
@@ -131,6 +91,7 @@ css:
                                 ></div>
                         </div>
                         <div class="card-footer">
+                            <b>Tension hospitalière</b><br>
                             <small class="text-muted">Nombre de lits de réanimation occupés par les patients Covid19 .</small>
                         </div>
                     </div>
@@ -142,6 +103,28 @@ css:
                 <div class="col-12 col-md-6">
                     <div class="card zoomable">
                         <div class="card-header text-center font-weight-bold">
+                            Cas
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card zoomable">
+                        <div class="card-header text-center font-weight-bold">
+                            Réanimations
+                        </div>
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="card zoomable">
+                        <div class="card-header text-center font-weight-bold">
                             Carte de l'incidence
                         </div>
                         <div class="card-body" id="datamap">
@@ -149,6 +132,8 @@ css:
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-12 col-md-6">
                     <div class="card zoomable">
                         <div class="card-header text-center font-weight-bold">
@@ -166,11 +151,12 @@ css:
             </div>
         </div>
 
+        
+    </div>
+    <div class="row">
         <div class="col-md-2">
             {% twitter https://twitter.com/covidtracker_fr limit=2 %}
         </div>
-    </div>
-    <div class="row">
 
     </div>
 </div>
