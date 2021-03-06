@@ -18,14 +18,10 @@ navbar:
     id: cards_vaccins
   - name: Population vaccinée
     id: proportion_vaccins
-  - name: Évolution
-    id: evolution_vaccins
   - name: Répartition géographique
     id: cartes_vaccins
-  - name: Immunité collective
+  - name: Informations
     id: vaccins_immunite
-  - name: Vaccins autorisés
-    id: autorisation-des-vaccins
   - name: Situation mondiale
     id: vaccins_monde
 ---
@@ -36,7 +32,7 @@ navbar:
     var data = {{ site.data.json.vaccins.vacsi-fra | jsonify }};
     var data_france = {{ site.data.json.vaccins.vacsi-fra | jsonify }};
     var vaccines_2doses = {{ site.data.json.vaccins.vacsi-fra-2doses | jsonify }};
-    var sommes_doses_rolling = {{ site.data.json.vaccins.sommes-doses-rolling | jsonify }};
+    var somme_doses_rolling = {{ site.data.json.vaccins.somme-doses-rolling | jsonify }};
     var livraisons = {{ site.data.json.vaccins.flux-tot-nat | jsonify }};
 </script>
 

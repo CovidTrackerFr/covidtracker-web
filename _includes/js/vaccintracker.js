@@ -41,7 +41,6 @@ var cumul_stock = 0;
 var cumul_stock_array = [];
 
 var updated = false;
-const table = document.getElementById("tableauVaccin");
 
 // Stocks
 // TODO mettre ce fichier dans output
@@ -64,13 +63,13 @@ fetch('https://raw.githubusercontent.com/rozierguillaume/vaccintracker/main/data
         })
         init();
     })
-    .catch(function (error) {
+ /*   .catch(function (error) {
             this.dataError = true;
             console.log("Fetch data stock");
             console.log(error.message);
         }
     )
-
+*/
 
 
 function init() {
@@ -115,8 +114,6 @@ function calculerObjectif() {
 }
 
 function maj2Doses() {
-    //log(vaccines_2doses)
-
     let N = vaccines_2doses.n_dose2_cumsum.length
     let vaccines_2doses_24h = vaccines_2doses.n_dose2_cumsum[N - 1] - vaccines_2doses.n_dose2_cumsum[N - 2]
 
@@ -128,8 +125,7 @@ function maj2Doses() {
 
     date = vaccines_2doses.jour[N - 1]
     document.getElementById("date_maj_2").innerHTML = date.slice(8) + "/" + date.slice(5, 7);
-    document.getElementById("proportionVaccines2doses").innerHTML = (Math.round(dejaVaccines2Doses * 10000000) / 10000000).toFixed(2);
-    tableVaccin(table);
+
 }
 
 function calculerDateProjeteeObjectif() {
@@ -386,7 +382,6 @@ function rollingMean(data) {
 }
 
 function buildBarChart(data) {
-    document.getElementById("afficherLivraisonsDiv").innerHTML = ``
     var ctx = document.getElementById('lineVacChart').getContext('2d');
     let labels = nb_vaccines.map(val => val.date)
     let data_values = data.map((value, idx) => ({x: labels[idx], y: parseInt(value)}))
@@ -474,13 +469,11 @@ function buildBarChart(data) {
 }
 
 function typeDonneesChart() {
-    type_donnees = document.getElementById("type").value
-    this.lineChart.destroy()
-    //document.getElementById("objectif").checked=false;
+    let type_donnees = document.getElementById("type").value;
+    this.lineChart.destroy();
 
     if (type_donnees == "quotidien") {
-        document.getElementById("afficherLivraisonsDiv").innerHTML = ``
-        document.getElementById("afficherProjectionsDiv").innerHTML = ``
+        $(".optionsCumul").hide();
 
         nb_vaccines_quot = [nb_vaccines[0].total]
         for (i = 0; i < nb_vaccines.length - 1; i++) {
@@ -488,8 +481,7 @@ function typeDonneesChart() {
         }
         buildBarChart(nb_vaccines_quot);
     } else {
-        document.getElementById("afficherLivraisonsDiv").innerHTML = `<div id="afficherLivraisonsDiv"><input type="checkbox" id="afficherLivraisons" onchange="boxCheckedLineChart()" checked> Afficher les livraisons</div>`
-        document.getElementById("afficherProjectionsDiv").innerHTML = `<div id="afficherProjectionsDiv"><input type="checkbox" id="afficherProjections" onchange="boxCheckedProjectionsLineChart()" checked> Afficher les projections de vaccinations (1)</div>`
+        $(".optionsCumul").show();
         buildLineChart();
     }
 }
@@ -547,7 +539,7 @@ function obtenirCumulStockActuel() {
 }
 
 function majValeursStock() {
-    results = obtenirCumulStockActuel();
+    let results = obtenirCumulStockActuel();
     document.getElementById("nb_doses").innerHTML = numberWithSpaces(results["valeur"]);
     document.getElementById("date_maj_4").innerHTML = formateDate(results["jour"]);
 
@@ -565,12 +557,12 @@ function majValeurs() {
     document.getElementById("nb_doses_injectees").innerHTML = numberWithSpaces(dejaVaccinesNb);
     document.getElementById("nb_doses_injectees_24h").innerHTML = numberWithSpaces(dejaVaccinesNb - nb_vaccines[nb_vaccines.length - 2].n_dose1);
 
-    document.getElementById("proportionVaccinesMax").innerHTML = (Math.round(dejaVaccines * 10000000) / 10000000).toFixed(2);
+    //document.getElementById("proportionVaccinesMax").innerHTML = (Math.round(dejaVaccines * 10000000) / 10000000).toFixed(2);
     //console.log(dejaVaccines2Doses);
     //document.getElementById("proportionVaccinesMin").innerHTML = (Math.round(dejaVaccines/2*10000000)/10000000).toFixed(2);
     //document.getElementById("proportion_doses").innerHTML = (dejaVaccinesNb/cumul_stock*100).toFixed(1);
 
-    document.getElementById("proportionAVaccinerImmu").innerHTML = (Math.round(restantaVaccinerImmunite * 10000000) / 10000000).toFixed(2);
+    //document.getElementById("proportionAVaccinerImmu").innerHTML = (Math.round(restantaVaccinerImmunite * 10000000) / 10000000).toFixed(2);
     document.getElementById("objectif_quotidien").innerHTML = numberWithSpaces(objectifQuotidien);
     document.getElementById("date_projetee_objectif").innerHTML = formaterDate(dateProjeteeObjectif);
     date = nb_vaccines[nb_vaccines.length - 1].date

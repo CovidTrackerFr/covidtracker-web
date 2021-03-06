@@ -1,6 +1,6 @@
-<div class="card zoomable">
+<div class="card zoomable" style="height: 100%">
     <div  id="evolution_vaccins" class="card-header navbar-anchor">Évolution</div>
-    <div class="card-body">
+    <div class="card-body" style="height: 100%">
         <p class="card-text">
             Pour vacciner l'ensemble de la population adulte (52 millions de personnes) d'ici à août 2021, il faudrait injecter <b><span id="objectif_quotidien">--</span> doses</b> chaque jour.
             <br>
@@ -10,16 +10,30 @@
             Le graphique suivant présente le nombre cumulé de personnes ayant reçu au moins 1 dose de vaccin Covid19.
         </p>
         <div>
-            <div>
-                <select name="type" id="type" onchange="typeDonneesChart()">
+            <div class="row">
+                <div class="col-md-4">
+                    <select class="form-control" name="type" id="type" onchange="typeDonneesChart()">
                     <option value="cumul"><b>Cumul</b> vaccinés</option>
                     <option value="quotidien">Vaccinations quotidiennes</option>
                 </select>
+                </div>
+                <div class="col-md-4 optionsCumul">
+                    <p class="custom-control custom-switch">
+                        <input type="checkbox" id="afficherLivraisons" onchange="boxCheckedLineChart()" checked class="custom-control-input">
+                        <label class="custom-control-label" for="afficherLivraisons">Afficher les livraisons</label>
+                    </p>
+                </div>
+                <div class="col-md-4 optionsCumul">
+                    <p class="custom-control custom-switch">
+                        <input class="custom-control-input" type="checkbox" id="afficherProjections" onchange="boxCheckedProjectionsLineChart()" checked>
+                        <label class="custom-control-label" for="afficherProjections">Afficher les projections de vaccination (1)</label>
+                    </p>
+                </div>
             </div>
         </div>
 
-        <div class="chart-container" style="position: relative; height:50vh; width:100%">
-            <canvas id="lineVacChart" style="margin-top:20px; max-height: 700px; max-width: 900px;"></canvas>
+        <div class="chart-container" style="position: relative; width:100%">
+            <canvas id="lineVacChart" style="margin-top:20px;  max-width: 900px;"></canvas>
         </div>
     </div>
     <div class="card-footer text-muted">

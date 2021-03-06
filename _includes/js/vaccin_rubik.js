@@ -1,4 +1,5 @@
 function tableVaccin(tableElt, level, populationVaccinnee, populationVaccinnee2Doses) {
+
     tableElt.innerHTML = "";
     let first = true;
     for(let i=0; i<10; i++){

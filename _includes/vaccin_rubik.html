@@ -1,7 +1,4 @@
 {% if include.part == "tableau" %}
-<script>
-    {% include js/vaccin_rubik.js %}
-</script>
 
 <div id="tablea_div" style="width:80vw; height:80vw; max-width: 400px; max-height: 400px;margin-right: auto; margin-left:auto;" >
 <table style="width:100%; height:100%" id="tableauVaccin"></table>
@@ -12,6 +9,22 @@
             </span>
 </div>
 
+{% elsif include.part == "description" %}
+
+<span style="font-size: 200%; color: rgb(45, 189, 84)"><span id="proportionVaccinesMax">--</span>%</span>
+{% if include.style == "horizontal" %} <br> {% endif %}
+des Français ont reçu au moins une dose de vaccin, <span style="color: rgb(31, 128, 57)"><span id="proportionVaccines2doses">--</span>%</span> ont reçu les deux doses.<br>
+Il reste à vacciner au moins
+{% if include.style == "horizontal" %}<br>{% endif %}
+<span style="font-size: 200%; color: rgb(237, 88, 88);"><span id="proportionAVaccinerImmu">--</span>%</span>
+{% if include.style == "horizontal" %}<br>{% endif %}
+des Français avant d'atteindre un taux de vaccination de 60%. <br>
+<span class="text-muted small">N.B. : un taux de vaccination de 60% ne permet pas nécessairement d'atteindre une immunité collective.<br></span>
+
+{% elsif include.part == "script" %}
+<script>
+    {% include js/vaccin_rubik.js %}
+</script>
 <script type="text/javascript">
     let vacsifra = {{ site.data.json.vaccins.vacsi-fra | jsonify }};
     let n = vacsifra.n_dose1_cumsum.length;
@@ -26,20 +39,11 @@
         dejaVaccines1dose,
         dejaVaccines2doses
     );
+
+    $('#proportionVaccinesMax').text(dejaVaccines1dose.toFixed(2));
+    $('#proportionVaccines2doses').text(dejaVaccines2doses.toFixed(2));
+    $('#proportionAVaccinerImmu').text((60-dejaVaccines1dose).toFixed(2));
 </script>
-
-{% elsif include.part == "description" %}
-
-<span style="font-size: 200%; color: rgb(45, 189, 84)"><span id="proportionVaccinesMax">{{ site.data.vaccins.vaccins.proportion_vaccinnee }}</span>%</span>
-{% if include.style == "horizontal" %} <br> {% endif %}
-des Français ont reçu au moins une dose de vaccin.<br>
-Il reste à vacciner au moins
-{% if include.style == "horizontal" %}<br>{% endif %}
-<span style="font-size: 200%; color: rgb(237, 88, 88);"><span id="proportionAVaccinerImmu">{{site.data.vaccins.vaccins.cible_immunite}}</span>%</span>
-{% if include.style == "horizontal" %}<br>{% endif %}
-des Français avant d'atteindre un taux de
-vaccination de 60%. <br>
-<span class="text-muted small">N.B. : un taux de vaccination de 60% ne permet pas nécessairement d'atteindre une immunité collective.<br></span>
 
 {% endif %}
 
