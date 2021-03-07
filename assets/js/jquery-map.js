@@ -49,10 +49,44 @@
                 let svg = self.element.find('svg');
                 svg[0].removeAttribute('width');
                 svg[0].removeAttribute('height');
-                svg.css({'padding-right': '30px'})
+                svg.css({'padding-right': '50px'})
                 self._colorize();
                 self._buildLegend();
             });
+
+            //survol de la légende -> surbrillance des départements/régions
+            $(self.element).on({
+                mouseenter: function(e){
+                    let idx = $(this).data('valueidx');
+                    let borneinf, bornesup;
+                    if(self.options.legendDirection == "ascending") {
+                            borneinf = self.options.values[idx];
+                        if(idx == self.options.values.length-1) {
+                            bornesup = Infinity;
+                        } else {
+                            bornesup = self.options.values[idx+1];
+                        }
+                    } else {
+                        if(self.options.values[idx] == ">") {
+                            borneinf = self.options.values[idx+1];
+                            bornesup = Infinity;
+                        } else if(self.options.values.length-1 == idx) {
+                            borneinf = 0;
+                            bornesup = self.options.values[idx];
+                        } else {
+                            borneinf = self.options.values[idx+1];
+                            bornesup = self.options.values[idx];
+                        }
+                    }
+                    $('svg path').filter(function(){
+                        let val = $(this).data(self.options.valueKey);
+                        return val >= borneinf && val <= bornesup;
+                    }).css({"stroke-width": '2.6', "stroke": "yellow"});
+                },
+                mouseleave: function(){
+                    $('svg path').css({'stroke-width': '0.6', 'stroke': 'white'});
+                }
+            },'.legendElt')
 
         },
 
@@ -91,7 +125,7 @@
             let self = this;
             if(this.legendContainer == null) {
                 let randId = Math.floor(Math.random() * Math.floor(1000));
-                this.legendContainer = $('<div id="legend'+randId+'" class="mapLegend" style="float:right;"></div>');
+                this.legendContainer = $('<div id="legend'+randId+'" class="mapLegend" style="position: absolute; right: 1rem;"></div>');
                 this.element.prepend(this.legendContainer);
             }
             this.legendContainer.empty().append('<table><tbody></tbody></table>');
@@ -104,7 +138,7 @@
                 if (value != '>') {
                     value = value + ' ' + self.options.symbol;
                 }
-                tbody.append('<tr><td style="text-align: center; background-color: '+self.options.colors[idx]+'; color: white; font-size: 50%; padding: 5px;">'+self.options.values[idx]+'</td></tr>')
+                tbody.append('<tr><td class="legendElt" style="text-align: center; background-color: '+self.options.colors[idx]+'; color: white; font-size: 50%; padding: 5px;" data-valueidx="'+idx+'">'+self.options.values[idx]+'</td></tr>')
             });
             this.legendContainer.css('margin-bottom', '-'+this.legendContainer.offsetHeight+'px');
         },
