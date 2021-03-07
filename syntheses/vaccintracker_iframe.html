@@ -1,0 +1,81 @@
+---
+layout: iframe
+img: assets/img/vaccine-1920.jpg
+title: VaccinTracker
+subtitle: Combien de français ont été vaccinés contre la Covid19 ?
+headjs:
+  - /assets/vendor/jquery-ui.widget-factory.min.js
+  - /assets/js/jquery-map.js
+js:
+  - js/covidtracker_utils.js
+  - js/vaccintracker.js
+css:
+  - /assets/css/vaccins_proportion.css
+  - /assets/css/timeline.css
+  - /assets/css/carte_departement.css
+navbar:
+  - name: Résumé
+    id: cards_vaccins
+  - name: Population vaccinée
+    id: proportion_vaccins
+  - name: Répartition géographique
+    id: cartes_vaccins
+  - name: Informations
+    id: vaccins_immunite
+  - name: Situation mondiale
+    id: vaccins_monde
+---
+
+<script type="text/javascript">
+    //initialisation variables globales pour les différents blocs
+    //à découper plus finement par la suite
+    var data = {{ site.data.json.vaccins.vacsi-fra | jsonify }};
+    var data_france = {{ site.data.json.vaccins.vacsi-fra | jsonify }};
+    var vaccines_2doses = {{ site.data.json.vaccins.vacsi-fra-2doses | jsonify }};
+    var somme_doses_rolling = {{ site.data.json.vaccins.somme-doses-rolling | jsonify }};
+    var livraisons = {{ site.data.json.vaccins.flux-tot-nat | jsonify }};
+</script>
+
+<div class="row">
+    <div class="col-md-12">Quelle proportion des Français a été vaccinée ? Combien faut-il encore vacciner de personnes avant
+        d'atteindre l'immunité collective ? Quels sont les différents types de vaccins proposés ? Ce tracker permet de
+        suivre la proportion de Français déjà vaccinés contre la Covid19. VaccinTracker est une initiative
+        citoyenne indépendante et non officielle.
+    </div>
+
+    <div class="col-md-12 mt-3">
+        {% include_relative elements/vaccins/cards.html %}
+    </div>
+
+    <div class="col-md-12 mt-3">
+        {% include_relative elements/vaccins/proportion.html %}
+    </div>
+
+    <div class="col-md-12 mt-3">
+        {% include_relative elements/vaccins/evolution.html %}
+    </div>
+
+    <div class="col-md-12 mt-3">
+        {% include_relative elements/vaccins/par_age.html %}
+    </div>
+
+    <div class="col-md12 mt-3">
+        {% include_relative elements/vaccins/par_type.html %}
+    </div>
+
+    <div class="col-md-12 mt-3">
+        {% include_relative elements/vaccins/repartition_geo.html %}
+    </div>
+
+    <div class="col-md-12 mt-3">
+        {% include_relative elements/vaccins/immunitecollective.html %}
+    </div>
+
+    <div class="col-md-12 mt-3">
+        {% include_relative elements/vaccins/autorisations.html %}
+    </div>
+
+    <div class="col-md-12 mt-3">
+        {% include_relative elements/vaccins/monde.html %}
+    </div>
+</div>

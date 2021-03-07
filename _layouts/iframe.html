@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+<head>
+    {% seo %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>{{ page.title }} - {{ site.title }}</title>
+    <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/assets/vendor/fontawesome/all.min.css" | prepend: site.baseurl }}">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    {% for css in layout.css %}
+    <link rel="stylesheet" href="{{ css | prepend: site.baseurl }}">
+    {% endfor %}
+    {% for css in page.css %}
+    <link rel="stylesheet" href="{{ css | prepend: site.baseurl }}">
+    {% endfor %}
+    <script src="{{'/assets/vendor/jquery.min.js' | prepend: site.baseurl}}"></script>
+    <script src="{{'/assets/vendor/popper.min.js' | prepend: site.baseurl}}"></script>
+    <script src="{{'/assets/vendor/bootstrap.bundle.min.js' | prepend: site.baseurl}}"></script>
+    <script src="{{'/assets/vendor/jquery.easing.min.js' | prepend: site.baseurl }}"></script>
+    <script src="{{'/assets/vendor/moment-with-locales.min.js' | prepend: site.baseurl}}"></script>
+    <script src="{{'/assets/vendor/Chart.bundle.js' | prepend: site.baseurl}}"></script>
+    <script src="{{'/assets/vendor/select2.min.js' | prepend: site.baseurl}}"></script>
+    <script src="{{'/assets/vendor/raphael.min.js' | prepend: site.baseurl}}"></script>
+    <script src="{{'/assets/vendor/justgage.min.js' | prepend: site.baseurl}}"></script>
+
+    <!-- vendor js -->
+    {% for js in layout.headjs %}
+    <script src="{{ js | prepend: site.baseur }}"></script>
+    {% endfor %}
+
+    {% for js in page.headjs %}
+    <script src="{{ js | prepend: site.baseurl }}"></script>
+    {% endfor %}
+</head>
+<body style="overflow: hidden">
+
+    <div id="content" class="container">
+
+        {{ content }}
+    </div>
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<script type="text/javascript">
+    {% include js/dashboard.js %}
+</script>
+
+
+<!-- include js -->
+{% for js in layout.js %}
+<script type="text/javascript">
+    {% include {{ js }} %}
+</script>
+{% endfor %}
+
+{% for js in page.js %}
+<script type="text/javascript">
+    {% include {{ js }} %}
+</script>
+{% endfor %}
+
+    <script type='text/javascript'>
+        // Size the parent iFrame
+        function iframeResize() {
+            var height = $('body').outerHeight(); // IMPORTANT: If body's height is set to 100% with CSS this will not work.
+            parent.postMessage("resize::"+height,"*");
+        }
+
+        $(document).ready(function() {
+            // Resize iframe
+            setInterval(iframeResize, 1000);
+        });
+    </script>
+
+</body>
+</html>
