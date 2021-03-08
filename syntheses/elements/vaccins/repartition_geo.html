@@ -18,7 +18,7 @@
     <div class="col-lg-6 col-md-12 mt-3">
         <div class="card zoomable">
             <div class="card-header">Par régions</div>
-            <div class="card-body" id="blocCarteDepartement"></div>
+            <div class="card-body" id="blocCarteRegion"></div>
         </div>
     </div>
     <div class="col-lg-6 col-md-12 mt-3">
@@ -71,7 +71,44 @@
         let valeursRegions = tableauValeursDepartements;
         let couleursRegions = tableauCouleursDepartements;
         let datareg = {{ site.data.json.vaccins.vacsi-reg | jsonify }};
-        
+        let populationRegion = {{ site.data.regions | jsonify }};
+
+        let datatemp = Object.entries(datareg);
+
+        let newdata = [];
+
+        //transform data to more suitable format
+        populationRegion.forEach(region => {
+            let dataregion = datatemp.filter(function(obj) {
+                return obj[1].code == region.region;
+            });
+            let dataregionLastDate = dataregion.reduce(function(prev, current){
+                return (prev[1].date > current[1].date) ? prev : current;
+            })[1];
+
+            let code = dataregionLastDate.code.replace('REG-', '');
+            let data = {
+                code: code,
+                region: dataregionLastDate.nom,
+                n_dose1_cumsum: dataregionLastDate.n_dose1_cumsum,
+                n_dose1_cumsum_moyenne7j: dataregionLastDate.n_dose1_cumsum_moyenne7j,
+                date: dataregionLastDate.date
+            };
+            data.population = region.population;
+            data.couvertureVaccinale = data.n_dose1_cumsum / data.population * 100;
+            newdata.push(data);
+        });
+
+        $('#blocCarteRegion').datamap({
+            svgPath: "{{ '/assets/svg/regions.svg' | prepend: site.baseurl }}",
+            data: newdata,
+            svgId: 'data-code_insee',
+            values: valeursRegions,
+            colors: couleursRegions,
+            valueKey: 'couvertureVaccinale',
+            legendDirection: "ascending",
+            iterationKey: 'code'
+        });
 
     });
 </script>

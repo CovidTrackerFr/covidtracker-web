@@ -7,7 +7,8 @@
  *      values: array of values - default : [">", "250", "150", "50"]
  *      colors: array of colors corresponding to values - default : ["#3c0000", "#c80000", "#f95228", "#98ac3b"]
  *      legendDirection : "ascending" or "descending" - default : "descending"
- *      symbol: trailing symbol for legend
+ *      postSymbol: trailing symbol for legend (for ex : " %")
+ *      preSymbol: symbol to prepend to legend value (for ex : "+ ")
  *      svgPath: path to the svg map
  *      data: data to be mapped - json format
  *  });
@@ -35,7 +36,8 @@
             svgId: "data-num",
             iterationKey: "num_dep",
             valueKey: "incidence_cas",
-            symbol: '',
+            postsymbol: '',
+            presymbol: '',
             hoverCallback: function(){},
             clickCallback: function(){}
         },
@@ -78,13 +80,13 @@
                             bornesup = self.options.values[idx];
                         }
                     }
-                    $('svg path').filter(function(){
+                    self.element.find('svg path').filter(function(){
                         let val = $(this).data(self.options.valueKey);
                         return val >= borneinf && val <= bornesup;
                     }).css({"stroke-width": '2.6', "stroke": "yellow"});
                 },
                 mouseleave: function(){
-                    $('svg path').css({'stroke-width': '0.6', 'stroke': 'white'});
+                    self.element.find('svg path').css({'stroke-width': '0.6', 'stroke': 'white'});
                 }
             },'.legendElt')
 
@@ -164,16 +166,18 @@
         _colorize: function(){
             let self = this;
             //console.log('colorize');
-            //console.log(self.options.data);
             $.each(self.options.data, function(key, value){
-                //console.log(value);
-                let selector = 'path['+self.options.svgId+'="'+value[self.options.iterationKey]+'"]';
+                let selector = 'path[' + self.options.svgId + '="' + value[self.options.iterationKey] + '"]';
                 let elt = self.element.find(selector);
-                //console.log(elt);
-                //console.log(self._getColor(value[self.options.valueKey]));
+                //Mayotte is not a path but a group
+                if (elt.length == 0 && value[self.options.iterationKey] == "06") {
+                    elt = self.element.find('g[' + self.options.svgId + '="' + value[self.options.iterationKey] + '"] path');
+                }
+
                 elt.css("fill", self._getColor(value[self.options.valueKey]));
-                //console.log('value '+value[self.options.valueKey]);
-                elt.data(self.options.valueKey, value[self.options.valueKey])
+
+                elt.data(self.options.valueKey, value[self.options.valueKey]);
+
             });
         }
     });
