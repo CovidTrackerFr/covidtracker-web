@@ -5,7 +5,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
+  schedule:
+    - cron: "40 16 * * *" # UTC time (-1 en hiver et -2 en été) : 10min après vaccintracker
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
