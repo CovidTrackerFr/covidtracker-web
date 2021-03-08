@@ -1,3 +1,6 @@
-[submodule "covid-data"]
-	path = covid-data
-	url = https://github.com/CovidTrackerFR/covid-data.git
+[submodule "submodules/vaccins"]
+	path = submodules/vaccins
+	url = https://github.com/rozierguillaume/vaccintracker
+[submodule "submodules/covid19"]
+	path = submodules/covid19
+	url = https://github.com/rozierguillaume/covid-19

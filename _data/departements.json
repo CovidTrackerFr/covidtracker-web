@@ -96,12 +96,12 @@
   },
   {
     "num_dep": "21",
-    "dep_name": "Côte-d'Or",
+    "dep_name": "Côte-d'or",
     "region_name": "Bourgogne-Franche-Comté"
   },
   {
     "num_dep": "22",
-    "dep_name": "Côtes-d'Armor",
+    "dep_name": "Côtes-d'armor",
     "region_name": "Bretagne"
   },
   {
@@ -476,7 +476,7 @@
   },
   {
     "num_dep": "95",
-    "dep_name": "Val-d'Oise",
+    "dep_name": "Val-d'oise",
     "region_name": "Île-de-France"
   },
   {
