@@ -387,16 +387,10 @@ function buildBarChart(data) {
     let data_values = data.map((value, idx) => ({x: labels[idx], y: parseInt(value)}))
 
     //let rollingMeanValues = rollingMean(data).map((value, idx)=> ({x: labels[idx+3], y: Math.round(value)}))
-    let rollingMeanValues = somme_doses_rolling.n_dose_rolling.map((value, idx) => ({
-        x: somme_doses_rolling.jour[idx],
-        y: value
-    }))
-    let data_values_2doses = vaccines_2doses.n_dose2.map((value, idx) => ({
-        x: vaccines_2doses.jour[idx],
-        y: parseInt(value)
-    }))
+    let rollingMeanValues = somme_doses_rolling.n_dose_rolling.map((value, idx) => ({x:somme_doses_rolling.jour[idx], y:value}))
+    let data_values_2doses = vaccines_2doses.n_dose2.map((value, idx)=> ({x: vaccines_2doses.jour[idx], y: parseInt(value)}))
 
-    debut_2nd_doses = labels.map((value, idx) => ({x: value, y: 0}))
+    debut_2nd_doses = labels.map((value, idx) => ({x: value, y:0}))
 
     let data_values_2nd = data_france.n_dose2.map((value, idx) => ({x: data_france.dates[idx], y: value}))
 
@@ -444,6 +438,11 @@ function buildBarChart(data) {
                     position: 'left',
                     gridLines: {
                         display: false
+                    },
+                    ticks: {
+                        callback: function (value) {
+                            return value/1000 +" k";
+                        }
                     }
                 }],
                 xAxes: [{
@@ -462,7 +461,9 @@ function buildBarChart(data) {
             },
             annotation: {
                 events: ["click"],
-                annotations: []
+                annotations: [
+
+                ]
             }
         }
     });

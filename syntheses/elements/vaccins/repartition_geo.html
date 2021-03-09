@@ -110,5 +110,29 @@
             iterationKey: 'code'
         });
 
+        var tableauValeursEHPAD = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+
+        var tableauCouleursEHPAD1dose= [
+            "#cfdde6",
+            "#b8d4e6",
+            "#a1cbe6",
+            "#8ac2e6",
+            "#73bae6",
+            "#5cb1e6",
+            "#45a8e6",
+            "#2e9fe6",
+            "#1796e6",
+            "#0076bf"
+        ];
+
+        //ehpad departements
+        let dataEHPAD = {{ site.data.json.vaccins.vacsi-res-tot-dep | jsonify }};
+        $("#blocCarteEHPADDepartement").datamap({
+            svgPath: "{{ '/assets/svg/departements.svg' | prepend: site.baseurl }}",
+            data: dataEHPAD,
+            values: tableauValeursEHPAD,
+            colors: tableauCouleursEHPAD1dose,
+            legendDirection: "ascending"
+        });
     });
 </script>
