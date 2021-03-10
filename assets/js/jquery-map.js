@@ -36,6 +36,7 @@
             svgId: "data-num",
             iterationKey: "num_dep",
             valueKey: "incidence_cas",
+            nameKey: "name",
             postsymbol: '',
             presymbol: '',
             hoverCallback: function(){},
@@ -88,8 +89,18 @@
                 mouseleave: function(){
                     self.element.find('svg path').css({'stroke-width': '0.6', 'stroke': 'white'});
                 }
-            },'.legendElt')
+            },'.legendElt');
 
+            $(self.element).on({
+                mouseenter: function(e){
+                    let name = $(e.currentTarget).data("name");
+                    let value = $(e.currentTarget).data(self.options.valueKey);
+                    $(self.element).find('#title').text(name + ' ('+value+')');
+                },
+                mouseleave: function(e){
+                    $(self.element).find('#title').text('...');
+                }
+            }, 'path');
         },
 
         _setOption: function(key, value) {
@@ -173,9 +184,8 @@
                 if (elt.length == 0 && value[self.options.iterationKey] == "06") {
                     elt = self.element.find('g[' + self.options.svgId + '="' + value[self.options.iterationKey] + '"] path');
                 }
-
+                elt.data("name", value[self.options.nameKey]);
                 elt.css("fill", self._getColor(value[self.options.valueKey]));
-
                 elt.data(self.options.valueKey, value[self.options.valueKey]);
 
             });

@@ -2,35 +2,48 @@
     Répartition géographique des vaccinés
 </h2>
 
-<div class="">
-    Coloration en fonction du pourcentage de population vaccinée.
-    Données fournies par le Ministère de la Santé.
-    Cliquez sur une région pour afficher plus de détails.
-</div>
 <br>
 <div class="row">
-    <div class="col-lg-6 col-md-12 mt-3">
+    <div class="col-md-12 mt-3">
         <div class="card zoomable">
             <div class="card-header">Par départements</div>
-            <div class="card-body" id="blocCarteDepartement"></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6" id="blocCarteDepartement">
+
+                    </div>
+                    <div class="col-md-6" id="detailDepartement">
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-lg-6 col-md-12 mt-3">
+    <div class="col-md-12 mt-3">
         <div class="card zoomable">
             <div class="card-header">Par régions</div>
-            <div class="card-body" id="blocCarteRegion"></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6" id="blocCarteRegion">
+
+                    </div>
+                    <div class="col-md-6" id="detailRegion">
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-lg-6 col-md-12 mt-3">
         <div class="card zoomable">
-            <div class="card-header">Vaccinations en EHPAD par départements</div>
-            <div class="card-body" id="blocCarteEHPADDepartement"></div>
+            <div class="card-header">Première dose en EHPAD par départements</div>
+            <div class="card-body" id="blocCarteEHPADDepartement1"></div>
         </div>
     </div>
     <div class="col-lg-6 col-md-12 mt-3">
         <div class="card zoomable">
-            <div class="card-header">Vaccinations en EHPAD par régions</div>
-            <div class="card-body" id="blocCarteEHPADRegions"></div>
+            <div class="card-header">Deuxième dose en EHPAD par départements</div>
+            <div class="card-body" id="blocCarteEHPADDepartement2"></div>
         </div>
     </div>
 </div>
@@ -51,12 +64,20 @@
             "#0076bf"
         ];
 
+        let departements = {{ site.data.departements | jsonify}};
         let data = {{ site.data.json.vaccins.vacsi-dep | jsonify }};
         delete data.departements; //remove first entry
         //add dep num in value
         for (var key in data) {
             data[key].num_dep = key;
+            let depEntry =  Object.values(departements).filter(function(dep){
+                return dep.num_dep == key;
+            });
+            if(depEntry.length > 0) {
+                data[key].name = depEntry[0].dep_name;
+            }
         }
+        console.log(data);
         $('#blocCarteDepartement').datamap({
             svgPath: "{{ '/assets/svg/departements.svg' | prepend: site.baseurl }}",
             data: data,
@@ -110,9 +131,9 @@
             iterationKey: 'code'
         });
 
-        var tableauValeursEHPAD = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+        let tableauValeursEHPAD = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
 
-        var tableauCouleursEHPAD1dose= [
+        let tableauCouleursEHPAD1dose= [
             "#cfdde6",
             "#b8d4e6",
             "#a1cbe6",
@@ -124,15 +145,53 @@
             "#1796e6",
             "#0076bf"
         ];
-
+        let tableauCouleursEHPAD2doses= [
+            "#9cb394",
+            "#90b384",
+            "#80ae73",
+            "#71ab60",
+            "#65a950",
+            "#56ab3d",
+            "#2e9c28",
+            "#1c7b21",
+            "#116522",
+            "#084004"
+        ];
         //ehpad departements
         let dataEHPAD = {{ site.data.json.vaccins.vacsi-res-tot-dep | jsonify }};
-        $("#blocCarteEHPADDepartement").datamap({
+        let dataEHPAD_ = [];
+        for(const key in dataEHPAD) {
+            let entry = {
+                num_dep: key,
+                res_couv_tot_dose1: dataEHPAD[key].res_couv_tot_dose1,
+                res_couv_tot_dose2: dataEHPAD[key].res_couv_tot_dose2
+            }
+            let depEntry =  Object.values(departements).filter(function(dep){
+                return dep.num_dep == key;
+            });
+            if(depEntry.length > 0) {
+                entry.name = depEntry[0].dep_name;
+            }
+            dataEHPAD_.push(entry);
+        }
+
+        $("#blocCarteEHPADDepartement1").datamap({
             svgPath: "{{ '/assets/svg/departements.svg' | prepend: site.baseurl }}",
-            data: dataEHPAD,
+            data: dataEHPAD_,
             values: tableauValeursEHPAD,
             colors: tableauCouleursEHPAD1dose,
-            legendDirection: "ascending"
+            legendDirection: "ascending",
+            iterationKey: "num_dep",
+            valueKey: "res_couv_tot_dose1"
+        });
+        $("#blocCarteEHPADDepartement2").datamap({
+            svgPath: "{{ '/assets/svg/departements.svg' | prepend: site.baseurl }}",
+            data: dataEHPAD_,
+            values: tableauValeursEHPAD,
+            colors: tableauCouleursEHPAD2doses,
+            legendDirection: "ascending",
+            iterationKey: "num_dep",
+            valueKey: "res_couv_tot_dose2"
         });
     });
 </script>
