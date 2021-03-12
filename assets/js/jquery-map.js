@@ -40,7 +40,8 @@
             postsymbol: '',
             presymbol: '',
             hoverCallback: function(){},
-            clickCallback: function(){}
+            clickCallback: function(){},
+            postLoad: function(){}
         },
 
         _create: function(){
@@ -55,6 +56,7 @@
                 svg.css({'padding-right': '50px'})
                 self._colorize();
                 self._buildLegend();
+                self.options.postLoad(self.element);
             });
 
             //survol de la légende -> surbrillance des départements/régions
@@ -101,6 +103,12 @@
                     $(self.element).find('#title').text('...');
                 }
             }, 'path');
+
+            $(self.element).on('click', function(e){
+                console.log('click');
+                self.options.clickCallback(e);
+            });
+
         },
 
         _setOption: function(key, value) {

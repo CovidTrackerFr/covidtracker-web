@@ -28,7 +28,41 @@
 
                     </div>
                     <div class="col-md-6" id="detailRegion">
+                        <div id="chart-container" style="position: relative; height:100%; width:100%">
+                            <canvas id="chartRegions" style="margin-top:0px; max-height: 700px; max-width: 900px;"></canvas>
+                        </div>
+                        <div style="display:none;height: 100%;flex-flow: column" id="chartRegion">
+                            <div style="flex: 0 1 auto">
+                            <h2 style="margin-top: 5px;">
+                                <span id="nomRegion">nomRegion</span>
+                                <button type="button" class="close" aria-label="Close" id="closeRegion">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
 
+                            </h2>
+                            <span style="font-size: 160%; color: black"><b><span id="vaccinesRegion"></span></b></span><br>
+                            <span><b>Nombre de personnes partiellement vaccinées</b><br>
+                                Nombre cumulé des personnes ayant reçu au moins une dose. Donc <span id="propVaccinesRegion"></span>% des habitants ont reçu une dose.
+        <br></span>
+                            <span style="font-size: 70%;">Mise à jour : <span id="dateMajDoses"></span></span>
+
+                            <!--<span style="font-size: 160%; color: black"><b>dosesReceptionneesRegion</b></span><br>
+                            <span><b>Nombre de doses réceptionnées</b><br>
+            Nombre cumulé de doses réceptionnées.
+        <br></span>
+                            <span style="font-size: 70%;">Mise à jour : dateMajRec</span>
+                            -->
+                            </div>
+                            <div id="region-graphique-detail" style="flex: 1 1 auto">
+                                <div class="chart-container" style="position: relative; height:100%; width:100%">
+                                    <canvas id="chartRegionDetail"
+                                            style="margin-top:0px; max-height: 700px; max-width: 900px;"></canvas>
+                                </div>
+                            </div>
+                            <div class="small text-muted">© CovidTracker.fr - Données : Ministère de la Santé</div>
+
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,38 +83,191 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        let tableauValeursDepartements = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        let tableauCouleursDepartements= [
-            "#cfdde6",
-            "#b8d4e6",
-            "#a1cbe6",
-            "#8ac2e6",
-            "#73bae6",
-            "#5cb1e6",
-            "#45a8e6",
-            "#2e9fe6",
-            "#1796e6",
-            "#0076bf"
-        ];
 
-        let departements = {{ site.data.departements | jsonify}};
-        let data = {{ site.data.json.vaccins.vacsi-dep | jsonify }};
-        delete data.departements; //remove first entry
+    /** data **/
+    let tableauValeursDepartements = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    let tableauCouleursDepartements= [
+        "#cfdde6",
+        "#b8d4e6",
+        "#a1cbe6",
+        "#8ac2e6",
+        "#73bae6",
+        "#5cb1e6",
+        "#45a8e6",
+        "#2e9fe6",
+        "#1796e6",
+        "#0076bf"
+    ];
+    let valeursRegions = tableauValeursDepartements;
+    let couleursRegions = tableauCouleursDepartements;
+    let datareg = {{ site.data.json.vaccins.vacsi-reg | jsonify }};
+    let populationRegion = {{ site.data.regions | jsonify }};
+    let departements = {{ site.data.departements | jsonify}};
+    let vacsidep = {{ site.data.json.vaccins.vacsi-dep | jsonify }};
+    delete vacsidep.departements; //remove first entry
+
+    /**
+     * Doses par régions
+     * @param data
+     */
+    let buildBarChartRegions = function(data) {
+
+        let ctx = document.getElementById('chartRegions').getContext('2d');
+        // graphique liste des régions
+        this.chartRegions = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: data.map(val => val.region),
+                datasets: [{
+                    label: 'Cumul vaccinés (1 ou 2 doses) ',
+                    data: data.map(val => val.n_dose1_cumsum),
+                    borderWidth: 3,
+                    backgroundColor: 'rgba(0, 168, 235, 0.5)',
+                    borderColor: 'rgba(0, 168, 235, 1)',
+                    cubicInterpolationMode: 'monotone'
+                },
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0
+                        },
+
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            maxRotation: 0,
+                            minRotation: 0,
+                            maxTicksLimit: 6,
+                            callback: function (value, index, values) {
+                                return value; //value.slice(8) + "/" + value.slice(5, 7);
+                            }
+                        }
+                    }]
+                },
+                annotation: {
+                    events: ["click"],
+                    annotations: []
+                }
+            }
+        });
+    };
+
+    let buildChartRegion = function(labels, datasets) {
+
+        let lineChartRegion = new Chart(document.getElementById('chartRegionDetail'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    deferred: {
+                        xOffset: 150,   // defer until 150px of the canvas width are inside the viewport
+                        yOffset: '50%', // defer until 50% of the canvas height are inside the viewport
+                        delay: 100      // delay of 500 ms after the canvas is considered inside the viewport
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0
+                        },
+
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            maxRotation: 0,
+                            minRotation: 0,
+                            maxTicksLimit: 6,
+                            callback: function (value, index, values) {
+                                return value.slice(8) + "/" + value.slice(5, 7);
+                            }
+                        }
+
+                    }]
+                },
+                annotation: {
+                    events: ["click"],
+                    annotations: []
+                }
+            }
+        });
+    };
+
+    let afficherRegion = function(code){
+        $("#chart-container").css('display', 'none');
+        $("#chartRegion").css('display', 'flex');
+        let dataRegion = Object.entries(datareg)
+            .filter(function(obj){
+            return obj[1].code == 'REG-'+code;
+        })
+            .map(entry => entry[1])
+            .sort(function(a,b){return b.date - a.date});
+
+        $('#nomRegion').text(dataRegion[0].nom);
+        let lastEntry = dataRegion[dataRegion.length-1];
+        let vaccines = lastEntry.n_dose1_cumsum;
+        let regionPop = Object.entries(populationRegion)
+                .filter(function(obj){
+                    return obj[1].region == 'REG-'+code;
+                })
+                .map(entry => entry[1].population);
+        let vaccinesProp = (vaccines / regionPop * 100).toFixed(2);
+        $("#vaccinesRegion").text(vaccines);
+        $("#propVaccinesRegion").text(vaccinesProp);
+        moment.locale('fr');
+        $("#dateMajDoses").text(moment(lastEntry.date, "YYYY-MM-DD").format("LL"));
+        let datasets = [{
+            label: 'Vaccinés (1 ou 2 doses) - ' + dataRegion[0].nom,
+            data: dataRegion.map(entry => entry.n_dose1_cumsum),
+            borderWidth: 3,
+            backgroundColor: 'rgba(0, 168, 235, 0.5)',
+            borderColor: 'rgba(0, 168, 235, 1)',
+            cubicInterpolationMode: 'monotone'
+        }];
+        buildChartRegion(dataRegion.map(entry => entry.date), datasets);
+    };
+
+    $(document).ready(function(){
+
         //add dep num in value
-        for (var key in data) {
-            data[key].num_dep = key;
+        for (var key in vacsidep) {
+            vacsidep[key].num_dep = key;
             let depEntry =  Object.values(departements).filter(function(dep){
                 return dep.num_dep == key;
             });
             if(depEntry.length > 0) {
-                data[key].name = depEntry[0].dep_name;
+                vacsidep[key].name = depEntry[0].dep_name;
             }
         }
-        console.log(data);
+
         $('#blocCarteDepartement').datamap({
             svgPath: "{{ '/assets/svg/departements.svg' | prepend: site.baseurl }}",
-            data: data,
+            data: vacsidep,
             svgId: 'data-num',
             values: tableauValeursDepartements,
             colors: tableauCouleursDepartements,
@@ -89,10 +276,7 @@
             iterationKey: 'num_dep'
         });
 
-        let valeursRegions = tableauValeursDepartements;
-        let couleursRegions = tableauCouleursDepartements;
-        let datareg = {{ site.data.json.vaccins.vacsi-reg | jsonify }};
-        let populationRegion = {{ site.data.regions | jsonify }};
+
 
         let datatemp = Object.entries(datareg);
 
@@ -120,7 +304,16 @@
             newdata.push(data);
         });
 
-        $('#blocCarteRegion').datamap({
+        //sort by doses for chart
+        newdata.sort(function(a, b){
+            return b.n_dose1_cumsum - a.n_dose1_cumsum;
+        });
+
+        console.log(newdata);
+
+        buildBarChartRegions(newdata);
+
+        let mapRegions = $('#blocCarteRegion').datamap({
             svgPath: "{{ '/assets/svg/regions.svg' | prepend: site.baseurl }}",
             data: newdata,
             svgId: 'data-code_insee',
@@ -128,8 +321,44 @@
             colors: couleursRegions,
             valueKey: 'couvertureVaccinale',
             legendDirection: "ascending",
-            iterationKey: 'code'
+            iterationKey: 'code',
+            postLoad: function(element){
+                element.find('.etiquette').each(function(){
+                    //add etiquette
+                    let code = $(this).data('code_insee');
+                    if(typeof code === "undefined" && $(this).hasClass('region-06')) {
+                        //Mayotte
+                        code = "06";
+                    }
+                    let couv = element.find('path[data-code_insee="'+code+'"]').data('couvertureVaccinale');
+                    if(typeof couv === "undefined" && code == "06") {
+                        //Mayotte
+                        couv = element.find('g[data-code_insee="'+code+'"] path').data('couvertureVaccinale');
+                    }
+                    $(this).find('tspan').text(couv.toFixed(2)+' %');
+                });
+            },
+            clickCallback: function(e) {
+                let code = $(e.target).data('code_insee');
+                if (typeof code === "undefined") {
+                    //if click on tspan, code_insee is in the parent
+                    code = $(e.target).closest('*[data-code_insee]').data('code_insee');
+                }
+                if(typeof code !== 'undefined') {
+                    afficherRegion(code);
+                }
+            }
         });
+
+        $('#closeRegion').on('click', function(e){
+            $("#chart-container").css('display', 'block');
+            $("#chartRegion").css('display', 'none');
+        });
+
+
+        /* ********************************** */
+        /* *** Cartes des doses en EHPAD  *** */
+        /* ********************************** */
 
         let tableauValeursEHPAD = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
 
@@ -157,6 +386,7 @@
             "#116522",
             "#084004"
         ];
+
         //ehpad departements
         let dataEHPAD = {{ site.data.json.vaccins.vacsi-res-tot-dep | jsonify }};
         let dataEHPAD_ = [];
