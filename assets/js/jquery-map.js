@@ -24,7 +24,7 @@
          *
          * @memberOf $
          */
-        version: "0.0.1",
+        version: "0.1.0",
 
         legendContainer: null,
 
@@ -60,7 +60,7 @@
             });
 
             //survol de la légende -> surbrillance des départements/régions
-            $(self.element).on({
+            self.element.on({
                 mouseenter: function(e){
                     let idx = $(this).data('valueidx');
                     let borneinf, bornesup;
@@ -93,7 +93,7 @@
                 }
             },'.legendElt');
 
-            $(self.element).on({
+            self.element.on({
                 mouseenter: function(e){
                     let name = $(e.currentTarget).data("name");
                     let value = $(e.currentTarget).data(self.options.valueKey);
@@ -104,7 +104,7 @@
                 }
             }, 'path');
 
-            $(self.element).on('click', function(e){
+            self.element.on('click', function(e){
                 console.log('click');
                 self.options.clickCallback(e);
             });

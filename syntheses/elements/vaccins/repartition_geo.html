@@ -323,6 +323,7 @@
             legendDirection: "ascending",
             iterationKey: 'code',
             postLoad: function(element){
+                console.log('postLoad');
                 element.find('.etiquette').each(function(){
                     //add etiquette
                     let code = $(this).data('code_insee');
@@ -339,6 +340,7 @@
                 });
             },
             clickCallback: function(e) {
+                console.log('click');
                 let code = $(e.target).data('code_insee');
                 if (typeof code === "undefined") {
                     //if click on tspan, code_insee is in the parent
