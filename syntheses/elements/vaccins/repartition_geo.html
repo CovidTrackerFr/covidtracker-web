@@ -13,7 +13,44 @@
 
                     </div>
                     <div class="col-md-6" id="detailDepartement">
+                        <div id="departementPlaceholder" class="position-relative" style="height: 100%; text-align: center; vertical-align: center;">
+                            Cliquer sur un département pour voir les détails.
+                        </div>
+                        <div id="departement-detail" style="flex-flow: column; display: none; height: 100%;">
+                            <div style="flex: 0 1 auto;">
+                                <h2 style="margin-top: 5px;">
+                                    <span id="nomDepartement">nomDepartement</span>
+                                    <button type="button" class="close" aria-label="Close" id="closeDepartement">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </h2>
+                                <span style="font-size: 160%; color: black"><b><span id="vaccinesDepartement"></span></b></span><br>
+                                <span>
+                <b>Personnes ayant reçu une dose</b><br>
+                                    Nombre cumulé de personnes ayant reçu au moins une dose de vaccin, soit <span id="vaccinesPopDep"></span>&nbsp;% des habitants.
+            <br></span>
+                                <span style="font-size: 70%;">Mise à jour : <span id="dateMajDosesDep">dateMajDoses</span></span>
 
+                            </div>
+                            <div style="flex: 1 1 auto;">
+                                <!--<div id="departement-graphique-detail" style="height: 100%">-->
+                                    <div class="chart-container" style="position: relative; height:100%; width:100%">
+                                        <canvas id="chartDepartementDetail" style="margin-top:0px; max-width: 900px;"></canvas>
+                                    </div>
+                                <!--</div>
+                                <br>-->
+                                <!--
+                                <div id="departement-graphique-age" style="display: none;">
+                                    <div class="chart-container" style="position: relative; height:100%; width:100%">
+                                        <canvas id="chartDepartementAge"
+                                                style="margin-top:0px; max-height: 700px; max-width: 900px;"></canvas>
+                                    </div>
+                                </div>
+                                -->
+
+                            </div>
+                            <div class="text-muted small">© CovidTracker.fr - Données : Ministère de la Santé</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -33,30 +70,30 @@
                         </div>
                         <div style="display:none;height: 100%;flex-flow: column" id="chartRegion">
                             <div style="flex: 0 1 auto">
-                            <h2 style="margin-top: 5px;">
-                                <span id="nomRegion">nomRegion</span>
-                                <button type="button" class="close" aria-label="Close" id="closeRegion">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <h2 style="margin-top: 5px;">
+                                    <span id="nomRegion">nomRegion</span>
+                                    <button type="button" class="close" aria-label="Close" id="closeRegion">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
 
-                            </h2>
-                            <span style="font-size: 160%; color: black"><b><span id="vaccinesRegion"></span></b></span><br>
-                            <span><b>Nombre de personnes partiellement vaccinées</b><br>
-                                Nombre cumulé des personnes ayant reçu au moins une dose. Donc <span id="propVaccinesRegion"></span>% des habitants ont reçu une dose.
-        <br></span>
-                            <span style="font-size: 70%;">Mise à jour : <span id="dateMajDoses"></span></span>
+                                </h2>
+                                <span style="font-size: 160%; color: black"><b><span id="vaccinesRegion"></span></b></span><br>
+                                <span><b>Nombre de personnes partiellement vaccinées</b><br>
+                                    Nombre cumulé des personnes ayant reçu au moins une dose. Donc <span id="propVaccinesRegion"></span>% des habitants ont reçu une dose.
+            <br></span>
+                                <span style="font-size: 70%;">Mise à jour : <span id="dateMajDoses"></span></span>
 
-                            <!--<span style="font-size: 160%; color: black"><b>dosesReceptionneesRegion</b></span><br>
-                            <span><b>Nombre de doses réceptionnées</b><br>
-            Nombre cumulé de doses réceptionnées.
-        <br></span>
-                            <span style="font-size: 70%;">Mise à jour : dateMajRec</span>
-                            -->
+                                <!--<span style="font-size: 160%; color: black"><b>dosesReceptionneesRegion</b></span><br>
+                                <span><b>Nombre de doses réceptionnées</b><br>
+                Nombre cumulé de doses réceptionnées.
+            <br></span>
+                                <span style="font-size: 70%;">Mise à jour : dateMajRec</span>
+                                -->
                             </div>
                             <div id="region-graphique-detail" style="flex: 1 1 auto">
                                 <div class="chart-container" style="position: relative; height:100%; width:100%">
                                     <canvas id="chartRegionDetail"
-                                            style="margin-top:0px; max-height: 700px; max-width: 900px;"></canvas>
+                                            style="margin-top:0px; max-width: 900px;"></canvas>
                                 </div>
                             </div>
                             <div class="small text-muted">© CovidTracker.fr - Données : Ministère de la Santé</div>
@@ -167,7 +204,7 @@
 
     let buildChartRegion = function(labels, datasets) {
 
-        let lineChartRegion = new Chart(document.getElementById('chartRegionDetail'), {
+        let lineChartRegion = new Chart(document.getElementById('chartRegionDetail').getContext('2d'), {
             type: 'line',
             data: {
                 labels: labels,
@@ -252,6 +289,82 @@
         buildChartRegion(dataRegion.map(entry => entry.date), datasets);
     };
 
+    let afficherDepartement = function(code){
+        $("#departement-detail").css('display', 'flex');
+        $('#departementPlaceholder').css('display', 'none');
+        let datadep = vacsidep[code];
+        $("#nomDepartement").text(datadep.name);
+        let dataJournalieres = datadep['n_dose1_cumsum'];
+        let datesDep = datadep['dates'];
+        $("#vaccinesDepartement").text(dataJournalieres[dataJournalieres.length-1]);
+        $("#vaccinesPopDep").text(datadep['n_dose1_cumsum_pop'].toFixed(2));
+        moment.locale('fr_FR');
+        $("#dateMajDosesDep").text(moment(datesDep[datesDep.length-1]).format('LL'));
+
+        let datasets = [{
+            label: 'Vaccinés (1 ou 2 doses) - ' + datadep.name,
+            // data: vaccinesDepartementsHistorique[numeroDepartement].map(val => val.vaccines),
+            data: dataJournalieres,
+            borderWidth: 3,
+            backgroundColor: 'rgba(0, 168, 235, 0.5)',
+            borderColor: 'rgba(0, 168, 235, 1)',
+            cubicInterpolationMode: 'monotone'
+        }];
+        buildChartDepartement(datesDep, datasets);
+    };
+
+    let buildChartDepartement = function(labels, datasets){
+        let lineChartDepartement = new Chart(document.getElementById('chartDepartementDetail').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    deferred: {
+                        xOffset: 150,   // defer until 150px of the canvas width are inside the viewport
+                        yOffset: '50%', // defer until 50% of the canvas height are inside the viewport
+                        delay: 100      // delay of 500 ms after the canvas is considered inside the viewport
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            min: 0
+                        },
+
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            maxRotation: 0,
+                            minRotation: 0,
+                            maxTicksLimit: 6,
+                            callback: function (value, index, values) {
+                                return value.slice(8) + "/" + value.slice(5, 7);
+                            }
+                        }
+
+                    }]
+                },
+                annotation: {
+                    events: ["click"],
+                    annotations: []
+                }
+            }
+        });
+    };
+
     $(document).ready(function(){
 
         //add dep num in value
@@ -273,10 +386,22 @@
             colors: tableauCouleursDepartements,
             valueKey: 'n_dose1_cumsum_pop',
             legendDirection: "ascending",
-            iterationKey: 'num_dep'
+            iterationKey: 'num_dep',
+            clickCallback: function(e){
+                let code = $(e.target).data('num');
+                if(typeof code !== "undefined") {
+                    afficherDepartement(code);
+                }
+            }
         });
 
+        $("#closeDepartement").on('click', function(e){
+            $("#departement-detail").css('display','none');
+            $('#departementPlaceholder').css('display', 'block');
+        });
 
+        /**** Regions ****/
+        // TODO create standalone element
 
         let datatemp = Object.entries(datareg);
 
@@ -309,8 +434,6 @@
             return b.n_dose1_cumsum - a.n_dose1_cumsum;
         });
 
-        console.log(newdata);
-
         buildBarChartRegions(newdata);
 
         let mapRegions = $('#blocCarteRegion').datamap({
@@ -323,7 +446,6 @@
             legendDirection: "ascending",
             iterationKey: 'code',
             postLoad: function(element){
-                console.log('postLoad');
                 element.find('.etiquette').each(function(){
                     //add etiquette
                     let code = $(this).data('code_insee');
@@ -340,7 +462,6 @@
                 });
             },
             clickCallback: function(e) {
-                console.log('click');
                 let code = $(e.target).data('code_insee');
                 if (typeof code === "undefined") {
                     //if click on tspan, code_insee is in the parent
