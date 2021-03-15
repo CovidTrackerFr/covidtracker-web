@@ -374,16 +374,6 @@ function buildLineChart(checked = true, projectionsChecked = true) {
     });
 }
 
-function rollingMean(data) {
-    var moveMean = [];
-    let N = data.length;
-
-    for (var i = 3; i < N - 3; i++) {
-        var mean = (parseInt(data[i - 3]) + data[i - 2] + data[i - 1] + data[i] + data[i + 1] + data[i + 2] + data[i + 3]) / 7;
-        moveMean.push(mean);
-    }
-    return moveMean;
-}
 
 /**
  * Move mean 3 days
@@ -419,7 +409,7 @@ function moveMean(data) {
 
 function buildBarChart(data) {
     var ctx = document.getElementById('lineVacChart').getContext('2d');
-    let labels = nb_vaccines.map(val => val.date)
+    let labels = nb_vaccines.map(val => val.date);
     let data_values = data.map((value, idx) => ({x: labels[idx], y: parseInt(value)}))
 
     //let rollingMeanValues = rollingMean(data).map((value, idx)=> ({x: labels[idx+3], y: Math.round(value)}))
@@ -490,9 +480,8 @@ function buildBarChart(data) {
                     gridLines: {
                         display: false
                     },
-                    time: {
-                        min: moment("2021-01-01"),
-                        max: moment()
+                    ticks: {
+                        max: moment(labels[labels.length-1]).add(1, 'days')
                     }
                 }]
             },
