@@ -24,7 +24,7 @@
          *
          * @memberOf $
          */
-        version: "0.1.0",
+        version: "0.1.1",
 
         legendContainer: null,
 
@@ -89,7 +89,7 @@
                     }).css({"stroke-width": '2.6', "stroke": "yellow"});
                 },
                 mouseleave: function(){
-                    self.element.find('svg path').css({'stroke-width': '0.6', 'stroke': 'white'});
+                    self.element.find('svg path').css({'stroke-width': '', 'stroke': ''});
                 }
             },'.legendElt');
 
