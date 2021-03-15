@@ -187,8 +187,7 @@ function datesProjection(date_min, taille
     return dates_projections
 }
 
-function buildLineChart(checked = true, projectionsChecked = true
-) {
+function buildLineChart(checked = true, projectionsChecked = true) {
     projectionsChecked = boxcheckedProjections
     //document.getElementById("afficherLivraisonsDiv").innerHTML = `<input type="checkbox" id="afficherLivraisons" onchange="boxCheckedLineChart()" checked> Afficher les livraisons`
     var ctx = document.getElementById('lineVacChart').getContext('2d');
@@ -317,16 +316,16 @@ function buildLineChart(checked = true, projectionsChecked = true
             },
             scales: {
                 yAxes: [{
-                    id: "injections",
-                    stacked: true,
-                    gridLines: {
-                        display: false
+                        id: "injections",
+                        stacked: true,
+                        gridLines: {
+                            display: false
+                        },
+                        ticks: {
+                            max: max_value,
+                            min: 0,
+                        }
                     },
-                    ticks: {
-                        max: max_value,
-                        min: 0,
-                    }
-                },
                     {
                         id: "injections_proj",
                         display: false,
@@ -365,6 +364,11 @@ function buildLineChart(checked = true, projectionsChecked = true
             annotation: {
                 events: ["click"],
                 annotations: []
+            },
+            legend: {
+                onClick: function(e, legendItem) {
+                    //do nothing as it is managed elsewhere
+                }
             }
         }
     });
@@ -381,13 +385,46 @@ function rollingMean(data) {
     return moveMean;
 }
 
+/**
+ * Move mean 3 days
+ * @param data
+ */
+function moveMean(data) {
+    let length = data.jour.length;
+    let newdata = [];
+    for(let i = 0; i<3; i++) {
+        let entry = {
+            x: data.jour[i],
+            y: 0
+        }
+        newdata.push(entry);
+    }
+    for(let i = 3; i < length; i++){
+        let entry = {
+            x: data.jour[i],
+            y: data.n_dose_rolling[i-3]
+        }
+        newdata.push(entry);
+    }
+    let enddate = data.jour[length-1];
+    for(let i = 0; i < 3; i++) {
+        let entry = {
+            x: moment(enddate, 'YYYY-MM-DD').add('days', i+1).format('YYYY-MM-DD'),
+            y: data.n_dose_rolling[length-4+i]
+        }
+        newdata.push(entry);
+    }
+    return newdata;
+}
+
 function buildBarChart(data) {
     var ctx = document.getElementById('lineVacChart').getContext('2d');
     let labels = nb_vaccines.map(val => val.date)
     let data_values = data.map((value, idx) => ({x: labels[idx], y: parseInt(value)}))
 
     //let rollingMeanValues = rollingMean(data).map((value, idx)=> ({x: labels[idx+3], y: Math.round(value)}))
-    let rollingMeanValues = somme_doses_rolling.n_dose_rolling.map((value, idx) => ({x:somme_doses_rolling.jour[idx], y:value}))
+    //let rollingMeanValues = somme_doses_rolling.n_dose_rolling.map((value, idx) => ({x:somme_doses_rolling.jour[idx], y:value}));
+    let rollingMeanValues = moveMean(somme_doses_rolling);
     let data_values_2doses = vaccines_2doses.n_dose2.map((value, idx)=> ({x: vaccines_2doses.jour[idx], y: parseInt(value)}))
 
     debut_2nd_doses = labels.map((value, idx) => ({x: value, y:0}))
