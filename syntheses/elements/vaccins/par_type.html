@@ -158,7 +158,7 @@
                     {
                         yAxisID:"injections_stock",
                         label: 'Livraisons (passées et planifiées) ',
-                        data: typesVaccinsLivraisons[typeVaccin].jour.map((day, idx) => ({x: day, y: typesVaccinsLivraisons[typeVaccin].nb_doses_tot_cumsum[idx]})),
+                        data: typesVaccinsLivraisons[typeVaccin].jour.map((day, idx) => ({x: moment(day, 'DD/MM/YYYY'), y: typesVaccinsLivraisons[typeVaccin].nb_doses_tot_cumsum[idx]})),
                         borderWidth: 3,
                         borderColor: "grey",
                         pointRadius: 0,
